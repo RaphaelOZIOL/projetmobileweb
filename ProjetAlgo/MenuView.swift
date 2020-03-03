@@ -33,11 +33,11 @@ struct MenuView: View {
                     Image(systemName: "envelope")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    //NavigationLink(destination: SignUpView(showMenu : self.$showMenu)){
+                    NavigationLink(destination: SignUpView(showMenu : self.$showMenu)){
                         Text("S'inscrire")
                             .foregroundColor(.gray)
                             .font(.headline)
-                    //}
+                    }
                 }
                     .padding(.top, 30)
                 HStack {

@@ -9,16 +9,18 @@
 import SwiftUI
 
 struct SignUpView: View {
-    //@Binding var showMenu: Bool 
+    @Binding var showMenu: Bool
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var settings: userSettings
     
     @State var firstname : String = ""
-    @State var name : String = ""
+    @State var lastname : String = ""
     @State var email : String = ""
     @State var password : String = ""
     @State var confPassword : String = ""
     @State var pseudo : String = ""
     @State var adress : String = ""
-    //@State var tel : Int = 0606060606
+    @State var tel : String = ""
     @State var birthday : Date = Date()
     
     var body: some View {
@@ -31,12 +33,12 @@ struct SignUpView: View {
             HStack(alignment: .center){
                 Text("Prénom : ")
                     .multilineTextAlignment(.center)
-                //TextField("Prénom", text: $firstname)
+                TextField("Prénom", text: $lastname)
             }
             HStack(alignment: .center){
                 Text("Nom : ")
                     .multilineTextAlignment(.center)
-                TextField("Nom", text: $name)
+                TextField("Nom", text: $firstname)
             }
             HStack(alignment: .center){
                 Text("email : ")
@@ -63,26 +65,34 @@ struct SignUpView: View {
                     .multilineTextAlignment(.center)
                 TextField("adresse", text: $adress)
             }
-//            HStack(alignment: .center){
-//                Text("téléphone : ")
-//                    .multilineTextAlignment(.center)
-//                TextField("téléphone", text: $tel)
-//            }
             HStack(alignment: .center){
-
-                DatePicker(selection: $birthday, label: { Text("Date de naissance :") })
+                Text("téléphone : ")
+                    .multilineTextAlignment(.center)
+                TextField("téléphone", text: $tel)
+            }
+            HStack(alignment: .center){
+                DatePicker(selection: $birthday, in: Date()..., displayedComponents: .date, label: { Text("Date de naissance :") })
             }
 
-            Button(action: add
-               /* let tabNotif = []
-                let user = User(email: email, password: password, pseudo: pseudo, firstname: firstname, lastname: lastname, birthday: birthday, notifTab: tabNotif, adress: adress, tel: tel, isAdmin: false)
-                */
+            Button(action: {
+                let tabNotif: [Notification] = []
+                let user = User(id: 0, email: self.email, password: self.password, pseudo: self.pseudo, firstname: self.firstname, lastname: self.lastname, birthday: self.birthday, notifTab: tabNotif, adress: self.adress, tel: self.tel, isAdmin: false)
+                
 
-              //  pFetcher.addPersonJSON(person: //person)*/
-
-               // self.presentationMode.wrappedValue.dismiss()
-            ) {
-                Text("Ajouter")
+                var reponse = RequestManager.signUpRequest(user: user)
+                
+                if(reponse["token"] == nil){
+                    print("mauvais mail ou pasword")
+                }
+                else{
+                    self.settings.token = reponse["token"] as! String
+                    self.settings.nom = reponse["nom"] as! String
+                    self.settings.prenom = reponse["prenom"] as! String
+                    self.showMenu = false
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }) {
+                Text("S'inscrire")
             }
                 }
             }
@@ -90,14 +100,10 @@ struct SignUpView: View {
         
         
         
-    
-    func add(){
-        
-    }
 }
-
+/*
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
     }
-}
+}*/

@@ -18,7 +18,6 @@ struct LoginView: View {
     @Environment(\.presentationMode) var presentationMode
     // MARK: - View
     var body: some View {
-        NavigationView{
             VStack() {
                 Text("Appli anti-sexiste")
                     .font(.largeTitle).foregroundColor(Color.white)
@@ -48,7 +47,7 @@ struct LoginView: View {
                 }.padding([.leading, .trailing], 27.5)
                 
                 Button(action: {
-                    var reponse = RequestManager.postRequest(url: RequestManager.urlLogin, postString: RequestManager.getPostStringLogin(email: self.email, password: self.password))
+                    var reponse = RequestManager.loginRequest(email: self.email, pwd: self.password)
                     
                     if(reponse["token"] == nil){
                         print("mauvais mail ou pasword")
@@ -77,7 +76,7 @@ struct LoginView: View {
                         Text("Vous n'avez pas de compte ?")
                         
                            
-                            NavigationLink(destination: SignUpView()) {
+                            NavigationLink(destination: SignUpView(showMenu : self.$showMenu)) {
                                 Text("S'inscrire")
                             }
                         
@@ -87,7 +86,7 @@ struct LoginView: View {
                     LinearGradient(gradient: Gradient(colors: [.red, .yellow]), startPoint: .top, endPoint: .bottom)
                         .edgesIgnoringSafeArea(.all))
         }
-    }
+    
 }
 
 extension Color {

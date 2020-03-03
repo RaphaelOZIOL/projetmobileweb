@@ -11,10 +11,35 @@ import Foundation
 class RequestManager : Identifiable{
 
     static var urlLogin = URL(string: "https://projetmobileweb.herokuapp.com/user/login")
+    static var urlSignUp = URL(string: "https://projetmobileweb.herokuapp.com/user/signup")
     //static var urlGeAllPost
     
-    static func loginRequest(email: String, pwd : String){
-        RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
+    static func loginRequest(email: String, pwd : String) -> [String: Any]{
+       return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
+    }
+    
+    static func getPostStringLogin(email : String , password : String) -> String{
+        return "email=" + email + "&password=" + password;
+    }
+    
+    static func signUpRequest(user : User) -> [String: Any]{
+       return RequestManager.postRequest(url: urlSignUp,postString: RequestManager.getPostStringSignUp(user: user))
+    }
+    
+    static func getPostStringSignUp(user : User) -> String{
+        var birthday = getDateJS(date: user.birthday)
+        var string1 = "password=" + user.password + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
+        var string2 = "&lastname=" + user.lastname + "&birthday=" + birthday + "&adress=" + user.adress + "&tel=" + user.tel
+        return string1 + string2
+    }
+    
+    static func getDateJS(date : Date) -> String{
+        var dateString = date.description
+        let e = dateString.firstIndex(of: " ")!
+        let f = dateString[...e]
+        print(f.description)
+        return f.description
+        
     }
     
     static func getRequest(url : URL?){
@@ -66,7 +91,6 @@ class RequestManager : Identifiable{
     }
     
     
-    static func getPostStringLogin(email : String , password : String) -> String{
-        return "email=" + email + "&password=" + password;
-    }
+    
+    
 }
