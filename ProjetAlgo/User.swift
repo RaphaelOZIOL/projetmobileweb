@@ -19,14 +19,14 @@ class User : Identifiable,Codable{
     var firstname : String
     var lastname : String
     var birthday : Date
-    var notifTab : [Notification]
+    var notifTab : [NotificationPost]
     var adress : String
     var tel : String
     var isAdmin : Bool
         
     
     
-    init (id : Int, email : String , password : String, pseudo : String, firstname : String, lastname : String, birthday : Date, notifTab : [Notification], adress : String, tel : String, isAdmin : Bool){
+    init (id : Int, email : String , password : String, pseudo : String, firstname : String, lastname : String, birthday : Date, notifTab : [NotificationPost], adress : String, tel : String, isAdmin : Bool){
         
         self.id = id
         self.email = email

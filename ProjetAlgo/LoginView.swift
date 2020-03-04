@@ -16,6 +16,9 @@ struct LoginView: View {
     @Binding var showMenu: Bool
     @EnvironmentObject var settings: userSettings
     @Environment(\.presentationMode) var presentationMode
+    
+    @ObservedObject private var keyboard = KeyboardResponder()
+    
     // MARK: - View
     var body: some View {
             VStack() {
@@ -56,7 +59,7 @@ struct LoginView: View {
                         self.settings.token = reponse["token"] as! String
                         self.settings.nom = reponse["nom"] as! String
                         self.settings.prenom = reponse["prenom"] as! String
-                        self.showMenu.toggle()
+                        self.showMenu = false
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     
@@ -85,6 +88,11 @@ struct LoginView: View {
                 .background(
                     LinearGradient(gradient: Gradient(colors: [.red, .yellow]), startPoint: .top, endPoint: .bottom)
                         .edgesIgnoringSafeArea(.all))
+                
+                .padding(.bottom, keyboard.currentHeight)
+                .edgesIgnoringSafeArea(.bottom)
+                .animation(.easeOut(duration: 0.16))
+
         }
     
 }

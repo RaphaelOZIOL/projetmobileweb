@@ -17,38 +17,87 @@ struct AppView: View{
     var body: some View {
         let drag = DragGesture()
             .onEnded{
-                if $0.translation.width < -100 {
+                if $0.translation.width > -100 {
                     withAnimation {
                         self.showMenu = false
                     }
                 }
         }
-        return NavigationView {
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    AccueilView(showMenu : self.$showMenu)
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .disabled(self.showMenu ? true : false)
-                    
-                    if self.showMenu {
-                        MenuView(showMenu : self.$showMenu).frame(width: geometry.size.width/2)
-                            .transition(.move(edge: .leading))
-                    }
-                }.gesture(drag)
-            }
-            .navigationBarTitle("Fil d'actualité", displayMode: .inline)
-            .navigationBarItems(leading: (
-                Button(action: {
-                    withAnimation {
-                        self.showMenu.toggle()
-                    }
-                }) {
-                    Image(systemName: "line.horizontal.3")
-                        .imageScale(.large)
-                }
-                ))
-        }
         
+        if(settings.token == ""){
+            return AnyView(NavigationView {
+                    GeometryReader { geometry in
+                        ZStack(alignment: .trailing) {
+                            AccueilView(showMenu : self.$showMenu)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .disabled(self.showMenu ? true : false)
+                            
+                            if self.showMenu {
+                                MenuView(showMenu : self.$showMenu).frame(width: geometry.size.width/2)
+                                    .transition(.move(edge: .trailing))
+                            }
+                        }.gesture(drag)
+                    }
+                    .navigationBarTitle("Fil d'actualité", displayMode: .inline)
+                    .navigationBarItems(
+                        leading: (
+                            NavigationLink(destination: LoginView(showMenu : self.$showMenu)){
+                                
+                                    Image(systemName: "message")
+                                        .imageScale(.large)
+
+                                
+                            }
+                        
+                        ),
+                        trailing: (
+                        Button(action: {
+                            withAnimation {
+                                self.showMenu.toggle()
+                            }
+                        }) {
+                            Image(systemName: "person.crop.circle")
+                                .imageScale(.large)
+                        }
+                        ))
+                }
+            )
+        }
+        else{
+            return AnyView(NavigationView {
+                    GeometryReader { geometry in
+                        ZStack(alignment: .trailing) {
+                            AccueilView(showMenu : self.$showMenu)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .disabled(self.showMenu ? true : false)
+                            
+                            if self.showMenu {
+                                MenuView(showMenu : self.$showMenu).frame(width: geometry.size.width/2)
+                                    .transition(.move(edge: .trailing))
+                            }
+                        }.gesture(drag)
+                    }
+                    .navigationBarTitle("Fil d'actualité", displayMode: .inline)
+                    .navigationBarItems(
+                        leading: (
+                            NavigationLink(destination: CreatePostView(showMenu : self.$showMenu)){
+                                Image(systemName: "message")
+                                    .imageScale(.large)
+                            }
+                        ),
+                        trailing: (
+                        Button(action: {
+                            withAnimation {
+                                self.showMenu.toggle()
+                            }
+                        }) {
+                            Image(systemName: "person.crop.circle")
+                                .imageScale(.large)
+                        }
+                        ))
+                }
+            )
+        }
         
     }
 }

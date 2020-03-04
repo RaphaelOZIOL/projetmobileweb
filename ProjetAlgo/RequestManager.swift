@@ -12,6 +12,7 @@ class RequestManager : Identifiable{
 
     static var urlLogin = URL(string: "https://projetmobileweb.herokuapp.com/user/login")
     static var urlSignUp = URL(string: "https://projetmobileweb.herokuapp.com/user/signup")
+    static var urlCreatePost = URL(string: "https://projetmobileweb.herokuapp.com/post/create")
     //static var urlGeAllPost
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
@@ -26,11 +27,19 @@ class RequestManager : Identifiable{
        return RequestManager.postRequest(url: urlSignUp,postString: RequestManager.getPostStringSignUp(user: user))
     }
     
+    static func createPost(post : Post, token: String) -> [String: Any]{
+       return RequestManager.postRequest(url: urlCreatePost,postString: RequestManager.getPostStringCreatePost(post: post, token: token))
+    }
+    
     static func getPostStringSignUp(user : User) -> String{
         var birthday = getDateJS(date: user.birthday)
         var string1 = "password=" + user.password + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
         var string2 = "&lastname=" + user.lastname + "&birthday=" + birthday + "&adress=" + user.adress + "&tel=" + user.tel
         return string1 + string2
+    }
+    
+    static func getPostStringCreatePost(post : Post, token: String) -> String{
+        return "description=" + post.description + "&libelle=" + post.libelle + "&token=" + token + "&categorie=" + post.categ
     }
     
     static func getDateJS(date : Date) -> String{
