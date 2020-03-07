@@ -62,7 +62,7 @@ struct MenuView: View {
                     Image(systemName: "person")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    NavigationLink(destination: LoginView(showMenu : self.$showMenu)){
+                    NavigationLink(destination: ProfilView(showMenu : self.$showMenu)){
                         
                         Text("Mon profil")
                         .foregroundColor(.gray)
@@ -102,9 +102,16 @@ struct MenuView: View {
                     Image(systemName: "envelope")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    Text("Se déconnecter")
-                        .foregroundColor(.gray)
-                        .font(.headline)
+                    Button(action: {
+                        self.settings.nom = ""
+                        self.settings.prenom = ""
+                        self.settings.token = ""
+                    }) {
+                        Text("Se déconnecter")
+                            .foregroundColor(.gray)
+                            .font(.headline)
+                    }
+                    
                 }
                     .padding(.top, 30)
                 Spacer()

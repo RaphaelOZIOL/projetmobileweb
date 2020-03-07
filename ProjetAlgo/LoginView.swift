@@ -27,9 +27,9 @@ struct LoginView: View {
                     .padding([.top, .bottom], 40)
                     .shadow(radius: 10.0, x: 20, y: 10)
                 
-                Image("iosapptemplate") // mettre le logo
+                Image("IconPCS") // mettre le logo
                     .resizable()
-                    .frame(width: 250, height: 250)
+                    .frame(width: 300, height: 300)
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color.white, lineWidth: 4))
                     .shadow(radius: 10.0, x: 20, y: 10)

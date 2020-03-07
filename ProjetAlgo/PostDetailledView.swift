@@ -22,7 +22,7 @@ struct PostDetailledView: View {
                 Text(post.user.pseudo)
                 Text(post.dateCreation.description)
             }
-            List{
+           /* List{
                 
                 ForEach(post.reponses){reponse in
                 
@@ -40,7 +40,7 @@ struct PostDetailledView: View {
             Image(systemName: "safari")
             Image(systemName: "safari")
             Image(systemName: "safari")
-            }
+            }*/
         }
     }
 }

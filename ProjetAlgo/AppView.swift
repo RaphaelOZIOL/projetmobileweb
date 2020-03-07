@@ -85,8 +85,10 @@ struct AppView: View{
                                     .imageScale(.large)
                             }
                         ),
+                        
                         trailing: (
-                        Button(action: {
+                            
+                            Button(action: {
                             withAnimation {
                                 self.showMenu.toggle()
                             }
@@ -94,6 +96,9 @@ struct AppView: View{
                             Image(systemName: "person.crop.circle")
                                 .imageScale(.large)
                         }
+                                
+                            
+                            
                         ))
                 }
             )
@@ -109,14 +114,7 @@ struct AccueilView: View {
     
     var body: some View {
             VStack{
-                Button(action: {
-                    withAnimation{
-                        self.showMenu = true
-                    }
-                    
-                }) {
-                    Text("Bienvenu " + self.settings.nom + " " + self.settings.prenom)
-                    }
+                ListPostView()
             }
     }
 }

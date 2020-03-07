@@ -28,24 +28,31 @@ struct PostRowView: View {
         VStack{
             VStack{
                 Text(post.libelle)
+                    .bold()
+                    .padding()
                 Text(post.description)
-                Text(post.user.pseudo)
+                    .padding()
+                VStack{
+                HStack{
+                Text(post.user.pseudo + "couocu")
                 Text(post.dateCreation.description)
-            }
-            Text(self.post.reponses[0].libelle)
-            VStack{
-            Image(systemName: "safari")
-            Image(systemName: "safari")
-            Image(systemName: "safari")
-            }
-            VStack{
+                }
             
+            Text(self.post.reponses[0].libelle)
+            HStack{
             Image(systemName: "safari")
             Image(systemName: "safari")
             Image(systemName: "safari")
             }
+            }
+            .background(Color.yellow)
+                .cornerRadius(10)
         }
+        .border(Color.blue,width: 2)
+        .cornerRadius(10)
+        .background(Color.gray)
     }
+}
 }
 
 struct PostRowView_Previews: PreviewProvider {

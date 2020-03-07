@@ -12,13 +12,12 @@ import SwiftUI
 
 struct ListPostView : View {
     
-    var postList = [
-        Post(),
+    var postList = [ // appeler la requete get pour chopper les post
         Post()
       ]
     
   var body: some View {
-   NavigationView{
+  // NavigationView{
    VStack{
        List{
            ForEach(postList){post in
@@ -32,7 +31,7 @@ struct ListPostView : View {
        }.navigationBarTitle(Text(""))
 
     }
-  }
+  //}
     
 }
     

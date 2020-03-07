@@ -13,7 +13,9 @@ class RequestManager : Identifiable{
     static var urlLogin = URL(string: "https://projetmobileweb.herokuapp.com/user/login")
     static var urlSignUp = URL(string: "https://projetmobileweb.herokuapp.com/user/signup")
     static var urlCreatePost = URL(string: "https://projetmobileweb.herokuapp.com/post/create")
-    //static var urlGeAllPost
+    static var urlGetUser = URL(string : "https://projetmobileweb.herokuapp.com/user/info/")
+    static var urlGeAllPost = URL(string : "htpps://projetmobileweb.herokuapp.com/post/")
+    static var urlUpdateUser = URL(string : "htpps://projetmobileweb.herokuapp.com/user/edit")
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -27,14 +29,45 @@ class RequestManager : Identifiable{
        return RequestManager.postRequest(url: urlSignUp,postString: RequestManager.getPostStringSignUp(user: user))
     }
     
+    static func updateUserRequest(user : User, token: String) -> [String: Any]{
+        return RequestManager.patchRequest(url: urlUpdateUser,postString: RequestManager.getPostStringUpdateUser(user: user, token: token))
+    }
+    
     static func createPost(post : Post, token: String) -> [String: Any]{
        return RequestManager.postRequest(url: urlCreatePost,postString: RequestManager.getPostStringCreatePost(post: post, token: token))
     }
     
+    static func getUser(token: String) -> User{
+        var reponse = RequestManager.getRequest(url: URL(string: urlGetUser!.absoluteString + token))
+        if let a = reponse["email"] {
+            
+            let date = getDateSwift(d : reponse["birthday"] as! String)
+            return User(email: String(describing: reponse["email"] as! String), pseudo: String(describing: reponse["pseudo"] as! String), firstname: String(describing: reponse["firstname"] as! String), lastname: String(describing: reponse["lastname"] as! String), birthday: date, adress: String(describing: reponse["adress"] as! String), tel: (reponse["tel"] as! Int).description)
+        }
+        return User()
+    }
+    
     static func getPostStringSignUp(user : User) -> String{
-        var birthday = getDateJS(date: user.birthday)
-        var string1 = "password=" + user.password + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
-        var string2 = "&lastname=" + user.lastname + "&birthday=" + birthday + "&adress=" + user.adress + "&tel=" + user.tel
+        let birthday = getDateJS(date: user.birthday)
+        let string1 = "password=" + user.password + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
+        let string2 = "&lastname=" + user.lastname + "&birthday=" + birthday + "&adress=" + user.adress + "&tel=" + user.tel
+        return string1 + string2
+    }
+    
+    static func getPostStringUpdateUser(user : User, token: String) -> String/*[String : Any]*/{
+        let birthday = getDateJS(date: user.birthday)
+        let string1 = "token=" + token + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
+        let string2 = "&lastname=" + user.lastname + "&birthday=" + birthday + "&adress=" + user.adress + "&tel=" + user.tel
+        let json = [
+            "token": token,
+            "email": user.email,
+            "pseudo": user.pseudo,
+            "firstname": user.firstname,
+            "lastname": user.lastname,
+            "birthday": user.birthday.description,
+            "adress": user.adress,
+            "tel": user.tel
+            ] as [String : Any]
         return string1 + string2
     }
     
@@ -51,9 +84,21 @@ class RequestManager : Identifiable{
         
     }
     
-    static func getRequest(url : URL?){
+    static func getDateSwift(d : String) -> Date{
+
+        let iso = ISO8601DateFormatter()
+        iso.formatOptions =  [.withInternetDateTime, .withFractionalSeconds]
+        return iso.date(from: d as! String)!
+ 
+    }
+    
+    static func getRequest(url : URL?) -> [String: Any]{
+        var reponse:[String: Any] = [:]
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
         
-        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        let semaphore = DispatchSemaphore(value: 0)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print("error: \(error)")
             } else {
@@ -62,10 +107,16 @@ class RequestManager : Identifiable{
                 }
                 if let data = data, let dataString = String(data: data, encoding: .utf8) {
                     print("data: \(dataString)")
+                    let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    reponse = json!
                 }
             }
+            semaphore.signal()
         }
+        
         task.resume()
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture)
+        return reponse
     }
     
     static func postRequest(url : URL?, postString : String) -> [String: Any] {
@@ -99,6 +150,116 @@ class RequestManager : Identifiable{
         
     }
     
+    static func patchRequest(url : URL?, postString : String) -> [String: Any] {
+        guard let requestUrl = url else { fatalError() }
+        
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "PATCH"
+        var reponse:[String: Any] = [:]
+        request.httpBody = postString.data(using: String.Encoding.utf8);
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let semaphore = DispatchSemaphore(value: 0)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+                if let error = error {
+                    print("Error took place \(error)")
+                    
+                }
+         
+                if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                    print("Response data string:\n \(dataString)")
+                    let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    reponse = json!
+        
+                    
+                }
+            semaphore.signal()
+        }
+        task.resume()
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture)
+        return reponse
+        
+    }
+    
+
+/*
+        static func patchRequest(url : URL?, jsonPatch : [String: Any]) -> [String: Any] {
+            guard let requestUrl = url else { fatalError() }
+            var reponse:[String: Any] = [:]
+            
+            var request = URLRequest(url: requestUrl)
+            request.httpMethod = "PATCH"
+            
+            //request.httpBody = postString.data(using: String.Encoding.utf8);
+            
+            var jsonError: NSError?
+            do{
+                try request.httpBody = JSONSerialization.data(withJSONObject: jsonPatch)
+            } catch {
+                    print("ERROR")
+                }
+
+            
+            let semaphore = DispatchSemaphore(value: 0)
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    
+                    if let error = error {
+                        print("Error took place \(error)")
+                        
+                    }
+             
+                    if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                        print("Response data string:\n \(dataString)")
+                        let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        reponse = json!
+            
+                        
+                    }
+                semaphore.signal()
+            }
+            task.resume()
+            _ = semaphore.wait(timeout: DispatchTime.distantFuture)
+            return reponse
+            
+            
+            
+            let request = NSMutableURLRequest(url: url!)
+            request.httpMethod = "PATCH"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            do{
+
+               //let json: [String: Any] = ["status": "test"]
+               let jsonData = try? JSONSerialization.data(withJSONObject: jsonPatch)
+                request.httpBody = jsonData
+                print("jsonData: ", String(data: request.httpBody!, encoding: .utf8) ?? "no body data")
+            } catch {
+                print("ERROR")
+            }
+
+            let semaphore = DispatchSemaphore(value: 0)
+            let task = URLSession.shared.dataTask(with: request as URLRequest) {
+                data, response, error in
+
+                if let error = error {
+                            print("Error took place \(error)")
+                            
+                        }
+                 
+                        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                            print("Response data string:\n \(dataString)")
+                            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                            reponse = json!
+                
+                            
+                        }
+                    semaphore.signal()
+                }
+                task.resume()
+                _ = semaphore.wait(timeout: DispatchTime.distantFuture)
+                return reponse
+            }
+    
+    */
     
     
     

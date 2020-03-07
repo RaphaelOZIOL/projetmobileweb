@@ -41,8 +41,12 @@ class User : Identifiable,Codable{
         self.isAdmin = isAdmin
     }
     
+    convenience init(email : String , pseudo : String, firstname : String, lastname : String, birthday : Date, adress : String, tel : String){
+        self.init(id: 0, email: email, password: "", pseudo: pseudo, firstname: firstname, lastname: lastname, birthday:birthday, notifTab: [], adress: adress, tel: tel, isAdmin: false)
+    }
+    
     convenience init(){
-        self.init(id: 0, email: "", password: "", pseudo: "hugo le boss", firstname: "", lastname: "", birthday: Date(), notifTab: [], adress: "", tel: "", isAdmin: false)
+        self.init(id: 0, email: "", password: "", pseudo: "", firstname: "", lastname: "", birthday: Date(), notifTab: [], adress: "", tel: "", isAdmin: false)
     }
 }
 
