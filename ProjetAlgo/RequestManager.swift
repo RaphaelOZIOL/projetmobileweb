@@ -14,8 +14,9 @@ class RequestManager : Identifiable{
     static var urlSignUp = URL(string: "https://projetmobileweb.herokuapp.com/user/signup")
     static var urlCreatePost = URL(string: "https://projetmobileweb.herokuapp.com/post/create")
     static var urlGetUser = URL(string : "https://projetmobileweb.herokuapp.com/user/info/")
-    static var urlGeAllPost = URL(string : "htpps://projetmobileweb.herokuapp.com/post/")
-    static var urlUpdateUser = URL(string : "htpps://projetmobileweb.herokuapp.com/user/edit")
+    static var urlGetAllPost = URL(string : "https://projetmobileweb.herokuapp.com/post/get/allPost")
+    static var urlUpdateUser = URL(string : "https://projetmobileweb.herokuapp.com/user/edit")
+    static var urlAddLike = URL(string : "https://projetmobileweb.herokuapp.com/post/addLike") //postId token
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -37,6 +38,35 @@ class RequestManager : Identifiable{
        return RequestManager.postRequest(url: urlCreatePost,postString: RequestManager.getPostStringCreatePost(post: post, token: token))
     }
     
+    static func getAllPost() -> [Post]{
+        let reponse = RequestManager.getRequestTab(url: urlGetAllPost)
+        var allPost : [Post] = []
+        var i = 0
+        print(reponse)
+        for post in reponse {
+            var pseudo : NSString! = ""
+            var id : NSString! = ""
+            if let dict = post["userId"] as? NSDictionary
+            {
+                 pseudo = dict["pseudo"] as! NSString
+                 id = dict["_id"] as! NSString
+                
+            }
+            
+            let user = User(id : id.integerValue, pseudo : pseudo.description)
+            
+            
+            allPost.append(Post(id: i, description : post["description"] as! String, libelle: post["libelle"] as! String, categ : post["categorie"] as! String, likeTab : post["like"] as! [User], dislikeTab: post["dislike"] as! [User], signalementTab: post["signalement"] as! [User], user: user, reponses: post["reponses"] as! [Reponse], dateCreation: getDateSwift(d: post["create"] as! String)))
+ 
+            i = i+1
+        }
+        return allPost
+    }
+    
+    static func addLikePost(postId : Int, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringAddLike(postId: postId, token: token))
+    }
+    
     static func getUser(token: String) -> User{
         var reponse = RequestManager.getRequest(url: URL(string: urlGetUser!.absoluteString + token))
         if let a = reponse["email"] {
@@ -47,6 +77,11 @@ class RequestManager : Identifiable{
         return User()
     }
     
+    static func getPostStringAddLike(postId : Int, token: String) -> String{
+        let string = "postId=" + postId.description + "&token=" + token
+        return string
+    }
+    
     static func getPostStringSignUp(user : User) -> String{
         let birthday = getDateJS(date: user.birthday)
         let string1 = "password=" + user.password + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
@@ -54,20 +89,10 @@ class RequestManager : Identifiable{
         return string1 + string2
     }
     
-    static func getPostStringUpdateUser(user : User, token: String) -> String/*[String : Any]*/{
+    static func getPostStringUpdateUser(user : User, token: String) -> String{
         let birthday = getDateJS(date: user.birthday)
         let string1 = "token=" + token + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
         let string2 = "&lastname=" + user.lastname + "&birthday=" + birthday + "&adress=" + user.adress + "&tel=" + user.tel
-        let json = [
-            "token": token,
-            "email": user.email,
-            "pseudo": user.pseudo,
-            "firstname": user.firstname,
-            "lastname": user.lastname,
-            "birthday": user.birthday.description,
-            "adress": user.adress,
-            "tel": user.tel
-            ] as [String : Any]
         return string1 + string2
     }
     
@@ -109,6 +134,35 @@ class RequestManager : Identifiable{
                     print("data: \(dataString)")
                     let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                     reponse = json!
+                    
+                }
+            }
+            semaphore.signal()
+        }
+        
+        task.resume()
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture)
+        return reponse
+    }
+    
+    static func getRequestTab(url : URL?) -> [[String: Any]]{
+        var reponse : [[String: Any]] = [[:]]
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("error: \(error)")
+            } else {
+                if let response = response as? HTTPURLResponse {
+                    print("statusCode: \(response.statusCode)")
+                }
+                if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                    print("data: \(dataString)")
+                    let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
+                    reponse = json!
+                    
                 }
             }
             semaphore.signal()
@@ -182,9 +236,9 @@ class RequestManager : Identifiable{
     }
     
 
-/*
-        static func patchRequest(url : URL?, jsonPatch : [String: Any]) -> [String: Any] {
-            guard let requestUrl = url else { fatalError() }
+
+        //static func patchRequest(url : URL?, jsonPatch : [String: Any]) -> [String: Any] {
+           /* guard let requestUrl = url else { fatalError() }
             var reponse:[String: Any] = [:]
             
             var request = URLRequest(url: requestUrl)
@@ -220,8 +274,14 @@ class RequestManager : Identifiable{
             task.resume()
             _ = semaphore.wait(timeout: DispatchTime.distantFuture)
             return reponse
+            */
+           /* var urlRequest = URLRequest(url: url!)
+            urlRequest.httpMethod = "PATCH"
+            urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = jsonPatch. //bodyString.data(using: .utf8)
+            */
             
-            
+      /*
             
             let request = NSMutableURLRequest(url: url!)
             request.httpMethod = "PATCH"

@@ -12,23 +12,24 @@ import SwiftUI
 
 struct ListPostView : View {
     
-    var postList = [ // appeler la requete get pour chopper les post
-        Post()
-      ]
+    var postList = RequestManager.getAllPost()
+      
     
   var body: some View {
   // NavigationView{
    VStack{
        List{
            ForEach(postList){post in
-            NavigationLink(destination: PostDetailledView(post : post)){
+            
                 PostRowView(post : post)
-               }
+            
+            
+            
                
            }
        }
        Spacer()
-       }.navigationBarTitle(Text(""))
+       }
 
     }
   //}

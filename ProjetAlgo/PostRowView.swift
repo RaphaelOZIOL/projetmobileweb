@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PostRowView: View {
     
+   
     var post : Post
     var libelle : String
     init(post: Post){
@@ -25,39 +26,62 @@ struct PostRowView: View {
     
     var body: some View {
         
-        VStack{
-            VStack{
-                Text(post.libelle)
-                    .bold()
-                    .padding()
-                Text(post.description)
-                    .padding()
-                VStack{
-                HStack{
-                Text(post.user.pseudo + "couocu")
-                Text(post.dateCreation.description)
-                }
             
-            Text(self.post.reponses[0].libelle)
-            HStack{
-            Image(systemName: "safari")
-            Image(systemName: "safari")
-            Image(systemName: "safari")
+        HStack {
+            
+            VStack (alignment: .leading){
+                
+                NavigationLink(destination: PostDetailledView(post : post)) {
+                
+                    VStack (alignment: .leading){
+                        HStack() {
+                            Image(systemName: "person.crop.circle")
+                                .font(.subheadline)
+                                .padding(.top, 5)
+                                .foregroundColor(.secondary)
+
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(post.libelle)
+                                    .font(.headline)
+                                    .lineLimit(2)
+                                    .layoutPriority(1000)
+
+                                Text(post.dateCreation.description) // Date
+                                    .font(.caption)
+                                    
+                                    .lineLimit(nil)
+                                    .layoutPriority(999)
+                            }
+                            
+                            
+                        }
+                        .padding(.leading, 5)
+                        .padding([.top, .bottom], 10)
+                        
+                        VStack(){
+                            Text(post.description) // Date
+                            .font(.caption)
+                                
+                            .lineLimit(nil)
+                            .layoutPriority(999)
+                            
+                        }
+                        
+                        StarContainerView(post : post)
+                    }
+                }.navigationBarTitle(Text("Fil d'actualité"))
+                    
+                ButtonsPostView(post : post)
             }
-            }
-            .background(Color.yellow)
-                .cornerRadius(10)
         }
-        .border(Color.blue,width: 2)
-        .cornerRadius(10)
-        .background(Color.gray)
+
     }
-}
+    
 }
 
 struct PostRowView_Previews: PreviewProvider {
     static var previews: some View {
-        PostRowView(post: Post())
+        PostRowView(post : Post())
     }
 }
 

@@ -11,13 +11,13 @@ import Foundation
 import Combine
 import SwiftUI
 
-class Post : Identifiable,Codable{
+class Post : Identifiable,ObservableObject{
     
     var id: Int
     var description: String
     var libelle : String
     var categ : String
-    var likeTab : [User]
+    @Published var likeTab : [User]
     var dislikeTab : [User]
     var signalementTab : [User]
     var user : User

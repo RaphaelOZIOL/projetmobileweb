@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class User : Identifiable,Codable{
+class User : Identifiable{
     
     var id : Int
     var email : String
@@ -47,6 +47,10 @@ class User : Identifiable,Codable{
     
     convenience init(){
         self.init(id: 0, email: "", password: "", pseudo: "", firstname: "", lastname: "", birthday: Date(), notifTab: [], adress: "", tel: "", isAdmin: false)
+    }
+    
+    convenience init(id : Int, pseudo : String){
+        self.init(id: id, email: "", password: "", pseudo: pseudo, firstname: "", lastname: "", birthday: Date(), notifTab: [], adress: "", tel: "", isAdmin: false)
     }
 }
 

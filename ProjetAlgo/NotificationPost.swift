@@ -11,7 +11,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class NotificationPost : Identifiable,Codable{
+class NotificationPost : Identifiable{
     
     var id: Int
     var post : Post

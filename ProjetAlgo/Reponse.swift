@@ -11,7 +11,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class Reponse : Identifiable, Codable{
+class Reponse : Identifiable{
     
     var libelle : String
     var likeTab : [User]
