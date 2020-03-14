@@ -38,10 +38,10 @@ class RequestManager : Identifiable{
        return RequestManager.postRequest(url: urlCreatePost,postString: RequestManager.getPostStringCreatePost(post: post, token: token))
     }
     
-    static func getAllPost() -> [Post]{
+    static func getAllPost() -> PostSet{
         let reponse = RequestManager.getRequestTab(url: urlGetAllPost)
-        var allPost : [Post] = []
-        var i = 0
+        var allPost = PostSet(postTab : [])
+        
         print(reponse)
         for post in reponse {
             var pseudo : NSString! = ""
@@ -53,17 +53,17 @@ class RequestManager : Identifiable{
                 
             }
             
-            let user = User(id : id.integerValue, pseudo : pseudo.description)
+            let user = User(id : id.description, pseudo : pseudo.description)
             
             
-            allPost.append(Post(id: i, description : post["description"] as! String, libelle: post["libelle"] as! String, categ : post["categorie"] as! String, likeTab : post["like"] as! [User], dislikeTab: post["dislike"] as! [User], signalementTab: post["signalement"] as! [User], user: user, reponses: post["reponses"] as! [Reponse], dateCreation: getDateSwift(d: post["create"] as! String)))
+            allPost.add(post : Post(id : post["_id"] as! String, description : post["description"] as! String, libelle: post["libelle"] as! String, categ : post["categorie"] as! String, likeTab : post["like"] as! [User], dislikeTab: post["dislike"] as! [User], signalementTab: post["signalement"] as! [User], user: user, reponses: post["reponses"] as! [Reponse], dateCreation: getDateSwift(d: post["create"] as! String)))
  
-            i = i+1
+            
         }
         return allPost
     }
     
-    static func addLikePost(postId : Int, token : String) -> [String:Any]{
+    static func addLikePost(postId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringAddLike(postId: postId, token: token))
     }
     
@@ -77,8 +77,8 @@ class RequestManager : Identifiable{
         return User()
     }
     
-    static func getPostStringAddLike(postId : Int, token: String) -> String{
-        let string = "postId=" + postId.description + "&token=" + token
+    static func getPostStringAddLike(postId : String, token: String) -> String{
+        let string = "postId=" + postId + "&token=" + token
         return string
     }
     

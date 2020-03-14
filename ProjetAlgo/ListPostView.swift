@@ -12,14 +12,13 @@ import SwiftUI
 
 struct ListPostView : View {
     
-    var postList = RequestManager.getAllPost()
-      
+    @ObservedObject var postList : PostSet
     
   var body: some View {
   // NavigationView{
    VStack{
        List{
-           ForEach(postList){post in
+        ForEach(postList.postTab){post in
             
                 PostRowView(post : post)
             
@@ -36,10 +35,10 @@ struct ListPostView : View {
     
 }
     
-
+/*
 struct ListPostView_Previews: PreviewProvider {
     static var previews: some View {
         ListPostView()
     }
-}
+}*/
 

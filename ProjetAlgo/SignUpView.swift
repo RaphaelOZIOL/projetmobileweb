@@ -76,7 +76,7 @@ struct SignUpView: View {
 
             Button(action: {
                 let tabNotif: [NotificationPost] = []
-                let user = User(id: 0, email: self.email, password: self.password, pseudo: self.pseudo, firstname: self.firstname, lastname: self.lastname, birthday: self.birthday, notifTab: tabNotif, adress: self.adress, tel: self.tel, isAdmin: false)
+                let user = User(id: "0", email: self.email, password: self.password, pseudo: self.pseudo, firstname: self.firstname, lastname: self.lastname, birthday: self.birthday, notifTab: tabNotif, adress: self.adress, tel: self.tel, isAdmin: false)
                 
 
                 var reponse = RequestManager.signUpRequest(user: user)
@@ -88,6 +88,7 @@ struct SignUpView: View {
                     self.settings.token = reponse["token"] as! String
                     self.settings.nom = reponse["nom"] as! String
                     self.settings.prenom = reponse["prenom"] as! String
+                    self.settings.id = reponse["_id"] as! String
                     self.showMenu = false
                     self.presentationMode.wrappedValue.dismiss()
                 }

@@ -12,7 +12,7 @@ struct CreatePostView: View {
     @Binding var showMenu: Bool
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var settings: userSettings
-    
+    @ObservedObject var postList : PostSet
     @State var description : String = ""
     @State var libelle : String = ""
     @State var categorie = 0
@@ -53,7 +53,7 @@ struct CreatePostView: View {
             let disLikeTab: [User] = []
             let signalementTab: [User] = []
             let reponse: [Reponse] = []
-            let post = Post(id: 0, description: self.description, libelle: self.libelle, categ: self.cat[self.categorie], likeTab: likeTab, dislikeTab: disLikeTab, signalementTab: signalementTab, user: User(), reponses: reponse, dateCreation: Date())
+            let post = Post(id: "0", description: self.description, libelle: self.libelle, categ: self.cat[self.categorie], likeTab: likeTab, dislikeTab: disLikeTab, signalementTab: signalementTab, user: User(), reponses: reponse, dateCreation: Date())
                 
 
             var r = RequestManager.createPost(post: post, token : self.settings.token)
@@ -63,6 +63,7 @@ struct CreatePostView: View {
                 }
                 else{
                     self.showMenu = false
+                    self.postList.add(post : post)
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }) {

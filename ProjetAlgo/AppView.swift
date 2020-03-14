@@ -11,7 +11,7 @@ import Combine
 
 struct AppView: View{
     @State var showMenu = false
-    
+    @ObservedObject var postList = RequestManager.getAllPost()
     @EnvironmentObject var settings: userSettings
     
     var body: some View {
@@ -28,7 +28,7 @@ struct AppView: View{
             return AnyView(NavigationView {
                     GeometryReader { geometry in
                         ZStack(alignment: .trailing) {
-                            AccueilView(showMenu : self.$showMenu)
+                            AccueilView(showMenu : self.$showMenu, postList : self.postList)
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .disabled(self.showMenu ? true : false)
                             
@@ -67,7 +67,7 @@ struct AppView: View{
             return AnyView(NavigationView {
                     GeometryReader { geometry in
                         ZStack(alignment: .trailing) {
-                            AccueilView(showMenu : self.$showMenu)
+                            AccueilView(showMenu : self.$showMenu, postList : self.postList)
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .disabled(self.showMenu ? true : false)
                             
@@ -80,7 +80,7 @@ struct AppView: View{
                     .navigationBarTitle("Fil d'actualité", displayMode: .inline)
                     .navigationBarItems(
                         leading: (
-                            NavigationLink(destination: CreatePostView(showMenu : self.$showMenu)){
+                            NavigationLink(destination: CreatePostView(showMenu : self.$showMenu, postList : self.postList)){
                                 Image(systemName: "message")
                                     .imageScale(.large)
                             }
@@ -109,21 +109,21 @@ struct AppView: View{
 
 struct AccueilView: View {
     @Binding var showMenu: Bool
-    
+    @ObservedObject var postList : PostSet
     @EnvironmentObject var settings: userSettings
     
     var body: some View {
             VStack{
-                ListPostView()
+                ListPostView(postList : postList)
             }
     }
 }
 
 
-
+/*
 struct AppView_Previews: PreviewProvider {
     static var previews: some View {
         AppView()
     }
 }
-
+*/

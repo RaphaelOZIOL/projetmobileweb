@@ -10,43 +10,66 @@ import SwiftUI
 
 struct PostDetailledView: View {
     
-    var post : Post
-    
+    @ObservedObject var post : Post
     
     
     var body: some View {
-        VStack{
-            VStack{
-                Text(post.libelle)
-                Text(post.description)
-                Text(post.user.pseudo)
-                Text(post.dateCreation.description)
-            }
-           /* List{
-                
-                ForEach(post.reponses){reponse in
-                
-                    ReponseRowView(reponse : reponse)
-      
-              }
-            }
-            VStack{
-            Image(systemName: "safari")
-            Image(systemName: "safari")
-            Image(systemName: "safari")
-            }
-            VStack{
+        
             
-            Image(systemName: "safari")
-            Image(systemName: "safari")
-            Image(systemName: "safari")
-            }*/
-        }
-    }
-}
+        HStack {
+            
+            VStack (alignment: .leading){
+                
+                
+                
+                    VStack (alignment: .leading){
+                        HStack() {
+                            Image(systemName: "person.crop.circle")
+                                .font(.subheadline)
+                                .padding(.top, 5)
+                                .foregroundColor(.secondary)
 
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(post.libelle)
+                                    .font(.headline)
+                                    .lineLimit(2)
+                                    .layoutPriority(1000)
+
+                                Text(post.dateCreation.description) // Date
+                                    .font(.caption)
+                                    
+                                    .lineLimit(nil)
+                                    .layoutPriority(999)
+                            }
+                            
+                            
+                        }
+                        .padding(.leading, 5)
+                        .padding([.top, .bottom], 10)
+                        
+                        VStack(){
+                            Text(post.description) // Date
+                            .font(.caption)
+                                
+                            .lineLimit(nil)
+                            .layoutPriority(999)
+                            
+                        }
+                        
+                        StarContainerView(post : post)
+                    }
+                
+                    
+                ButtonsPostView(post : post)
+            }
+        }
+
+    }
+   
+}
+/*
 struct PostDetailledView_Previews: PreviewProvider {
     static var previews: some View {
         PostDetailledView(post : Post())
     }
-}
+}*/

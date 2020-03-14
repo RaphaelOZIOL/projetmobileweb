@@ -11,17 +11,7 @@ import SwiftUI
 struct PostRowView: View {
     
    
-    var post : Post
-    var libelle : String
-    init(post: Post){
-        self.post = post
-        if post.reponses.count > 0{
-            self.libelle = post.reponses[0].libelle
-        }
-        else{
-            self.libelle = ""
-        }
-    }
+    @ObservedObject var post : Post
     
     
     var body: some View {

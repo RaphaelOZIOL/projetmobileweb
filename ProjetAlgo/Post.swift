@@ -13,7 +13,7 @@ import SwiftUI
 
 class Post : Identifiable,ObservableObject{
     
-    var id: Int
+    var id: String
     var description: String
     var libelle : String
     var categ : String
@@ -25,7 +25,7 @@ class Post : Identifiable,ObservableObject{
     var dateCreation : Date
     
     
-    init (id : Int, description : String , libelle : String, categ : String, likeTab : [User], dislikeTab : [User], signalementTab : [User], user : User, reponses : [Reponse], dateCreation : Date){
+    init (id : String, description : String , libelle : String, categ : String, likeTab : [User], dislikeTab : [User], signalementTab : [User], user : User, reponses : [Reponse], dateCreation : Date){
         
         self.id = id
         self.description = description
@@ -41,9 +41,12 @@ class Post : Identifiable,ObservableObject{
     
 
     convenience init(){
-        self.init(id: 0, description: "harcelement dans le métro", libelle: "Je me suis faite insultée dans le métro", categ: "harcèlement", likeTab: [User()], dislikeTab: [], signalementTab: [User()], user: User(), reponses: [Reponse()], dateCreation: Date())
+        self.init(id: "0", description: "harcelement dans le métro", libelle: "Je me suis faite insultée dans le métro", categ: "harcèlement", likeTab: [User()], dislikeTab: [], signalementTab: [User()], user: User(), reponses: [Reponse()], dateCreation: Date())
     }
     
+    func addLike(user : User){
+        likeTab.append(user)
+    }
 
     
 }

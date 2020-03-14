@@ -12,5 +12,6 @@ class userSettings: ObservableObject {
     @Published var token = ""
     @Published var nom = ""
     @Published var prenom = ""
+    @Published var id = ""
 }
 

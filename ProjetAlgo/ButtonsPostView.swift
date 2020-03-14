@@ -9,14 +9,22 @@
 import SwiftUI
 
 struct ButtonsPostView: View {
-    var post : Post
+    @ObservedObject var post : Post
     @EnvironmentObject var settings: userSettings
+    
     var body: some View {
         HStack{
             GeometryReader { geometry in
                 HStack(alignment: .center){
                     Button(action : {
-                        RequestManager.addLikePost(postId: self.post.id, token: self.settings.token)
+                        let reponse = RequestManager.addLikePost(postId: self.post.id, token: self.settings.token)
+                        print()
+                        if((reponse["text"] as! String) != "Succès"){
+                            print("Déjà liker ou pas connecté")
+                        }
+                        else{
+                            self.post.addLike(user : User(id: self.settings.id))
+                        }
                     }){
                         HStack{
                             Image(systemName: "safari")
@@ -73,9 +81,9 @@ struct ButtonsPostView: View {
         }
     }
 }
-
+/*
 struct ButtonsPostView_Previews: PreviewProvider {
     static var previews: some View {
         ButtonsPostView(post : Post())
     }
-}
+}*/

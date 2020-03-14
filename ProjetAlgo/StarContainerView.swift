@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StarContainerView : View {
     
-    var post : Post
+   @ObservedObject var post : Post
 
    var body: some View {
        HStack(alignment: .center) {

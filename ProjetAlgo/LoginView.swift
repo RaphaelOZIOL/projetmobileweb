@@ -56,9 +56,13 @@ struct LoginView: View {
                         print("mauvais mail ou pasword")
                     }
                     else{
+                        print("REPONSE LOGIN")
+                        print(reponse)
                         self.settings.token = reponse["token"] as! String
                         self.settings.nom = reponse["nom"] as! String
                         self.settings.prenom = reponse["prenom"] as! String
+                        self.settings.id = reponse["_id"] as! String
+                        
                         self.showMenu = false
                         self.presentationMode.wrappedValue.dismiss()
                     }
