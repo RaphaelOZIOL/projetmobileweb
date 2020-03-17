@@ -17,15 +17,30 @@ struct ButtonsPostView: View {
             GeometryReader { geometry in
                 HStack(alignment: .center){
                     Button(action : {
-                        let reponse = RequestManager.addLikePost(postId: self.post.id, token: self.settings.token)
-                        print()
-                        if((reponse["text"] as! String) != "Succès"){
-                            print("Déjà liker ou pas connecté")
+                        if(!self.post.isLiked(user: self.settings.id) && !self.post.isDisliked(user: self.settings.id)){
+                            let reponse = RequestManager.addLikePost(postId: self.post.id, token: self.settings.token)
+                            print()
+                            if((reponse["text"] as! String) != "Succès"){
+                                
+                                print("Pas connecté A")
+                            }
+                            else{
+                                self.post.addLike(user : self.settings.id)
+                            }
                         }
                         else{
-                            self.post.addLike(user : User(id: self.settings.id))
+                            let reponse = RequestManager.deleteLikePost(postId: self.post.id, token: self.settings.token)
+                            print()
+                            if((reponse["text"] as! String) != "Succès"){
+                                
+                                print("Pas connecté D")
+                            }
+                            else{
+                                self.post.deleteLike(user : self.settings.id)
+                            }
+                            
                         }
-                    }){
+                        }){
                         HStack{
                             Image(systemName: "safari")
                                 .font(.subheadline)
@@ -41,6 +56,29 @@ struct ButtonsPostView: View {
                     .buttonStyle(PlainButtonStyle())
                     
                     Button(action : {
+                        if(!self.post.isDisliked(user: self.settings.id) && !self.post.isLiked(user: self.settings.id)){
+                            let reponse = RequestManager.addDislikePost(postId: self.post.id, token: self.settings.token)
+                            print()
+                            if((reponse["text"] as! String) != "Succès"){
+                                
+                                print("Pas connecté A")
+                            }
+                            else{
+                                self.post.addDislike(user : self.settings.id)
+                            }
+                        }
+                        else{
+                            let reponse = RequestManager.deleteDislikePost(postId: self.post.id, token: self.settings.token)
+                            print()
+                            if((reponse["text"] as! String) != "Succès"){
+                                
+                                print("Pas connecté D")
+                            }
+                            else{
+                                self.post.deleteDislike(user : self.settings.id)
+                            }
+                            
+                        }
                         
                     }){
                         HStack{
@@ -48,7 +86,7 @@ struct ButtonsPostView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
-                            Text("Commenter")
+                            Text("J'aime pas")
                                 .font(.subheadline)
                                 .lineLimit(2)
                                 
@@ -59,7 +97,30 @@ struct ButtonsPostView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     Button(action : {
-                        
+                                            
+                        if(!self.post.isSignaled(user: self.settings.id)){
+                            let reponse = RequestManager.addSignalementPost(postId: self.post.id, token: self.settings.token)
+                            print()
+                            if((reponse["text"] as! String) != "Succès"){
+                                
+                                print("Pas connecté A")
+                            }
+                            else{
+                                self.post.addSignalement(user : self.settings.id)
+                            }
+                        }
+                        else{
+                            let reponse = RequestManager.deleteSignalementPost(postId: self.post.id, token: self.settings.token)
+                            print()
+                            if((reponse["text"] as! String) != "Succès"){
+                                
+                                print("Pas connecté D")
+                            }
+                            else{
+                                self.post.deleteSignalement(user : self.settings.id)
+                            }
+                            
+                        }
                     }){
                         HStack{
                             Image(systemName: "safari")

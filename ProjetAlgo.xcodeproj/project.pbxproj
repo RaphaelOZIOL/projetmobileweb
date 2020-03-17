@@ -19,6 +19,7 @@
 		865D857124094EDC008DBEE7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865D857024094EDC008DBEE7 /* LoginView.swift */; };
 		865D8573240953D7008DBEE7 /* RequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865D8572240953D7008DBEE7 /* RequestLogin.swift */; };
 		86673BC4240E5640003D94BE /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86673BC3240E5640003D94BE /* AppView.swift */; };
+		866EE7AF2421217B00CF6F9B /* EditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866EE7AE2421217B00CF6F9B /* EditPostView.swift */; };
 		868601E024100FE400044321 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868601DF24100FE400044321 /* KeyboardResponder.swift */; };
 		8698575B241193B70014594A /* ProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8698575A241193B70014594A /* ProfilView.swift */; };
 		869DD146240CF49F004E6FD8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861CF8202405605100BC41C4 /* Post.swift */; };
@@ -72,6 +73,7 @@
 		865D8572240953D7008DBEE7 /* RequestLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLogin.swift; sourceTree = "<group>"; };
 		865D857424095DC0008DBEE7 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		86673BC3240E5640003D94BE /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		866EE7AE2421217B00CF6F9B /* EditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostView.swift; sourceTree = "<group>"; };
 		868601DF24100FE400044321 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 		8698575A241193B70014594A /* ProfilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilView.swift; sourceTree = "<group>"; };
 		869DD14A240D11BD004E6FD8 /* poucehaut */ = {isa = PBXFileReference; explicitFileType = image.jpeg; name = poucehaut; path = ../../Downloads/poucehaut; sourceTree = SOURCE_ROOT; };
@@ -176,6 +178,7 @@
 				8698575A241193B70014594A /* ProfilView.swift */,
 				86335E8224171FD60036DC02 /* StarContainerView.swift */,
 				86254129241D4839001CFDCA /* PostSet.swift */,
+				866EE7AE2421217B00CF6F9B /* EditPostView.swift */,
 			);
 			path = ProjetAlgo;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				8625412A241D4839001CFDCA /* PostSet.swift in Sources */,
 				86E60F57240D42600075089D /* PostRowView.swift in Sources */,
 				861CF8232405606700BC41C4 /* Reponse.swift in Sources */,
+				866EE7AF2421217B00CF6F9B /* EditPostView.swift in Sources */,
 				868601E024100FE400044321 /* KeyboardResponder.swift in Sources */,
 				86B1A7D024055605001670F7 /* AppDelegate.swift in Sources */,
 				865A45F524102AFC004E62C6 /* CreatePostView.swift in Sources */,

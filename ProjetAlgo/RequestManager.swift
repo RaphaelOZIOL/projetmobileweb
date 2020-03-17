@@ -16,7 +16,13 @@ class RequestManager : Identifiable{
     static var urlGetUser = URL(string : "https://projetmobileweb.herokuapp.com/user/info/")
     static var urlGetAllPost = URL(string : "https://projetmobileweb.herokuapp.com/post/get/allPost")
     static var urlUpdateUser = URL(string : "https://projetmobileweb.herokuapp.com/user/edit")
-    static var urlAddLike = URL(string : "https://projetmobileweb.herokuapp.com/post/addLike") //postId token
+    static var urlAddLike = URL(string : "https://projetmobileweb.herokuapp.com/post/addLike")
+    static var urlDeleteLike = URL(string : "https://projetmobileweb.herokuapp.com/post/deleteLike")//postId token
+    static var urlAddDislike = URL(string : "https://projetmobileweb.herokuapp.com/post/addDislike")
+    static var urlDeleteDislike = URL(string : "https://projetmobileweb.herokuapp.com/post/deleteDislike")//postId token
+    static var urlAddSignalement = URL(string : "https://projetmobileweb.herokuapp.com/post/addSignalement")
+    static var urlDeleteSignalement = URL(string : "https://projetmobileweb.herokuapp.com/post/addSignalement")
+    static var urlUpdatePost = URL(string : "https://projetmobileweb.herokuapp.com/post/update")
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -30,12 +36,17 @@ class RequestManager : Identifiable{
        return RequestManager.postRequest(url: urlSignUp,postString: RequestManager.getPostStringSignUp(user: user))
     }
     
+    
     static func updateUserRequest(user : User, token: String) -> [String: Any]{
         return RequestManager.patchRequest(url: urlUpdateUser,postString: RequestManager.getPostStringUpdateUser(user: user, token: token))
     }
     
     static func createPost(post : Post, token: String) -> [String: Any]{
        return RequestManager.postRequest(url: urlCreatePost,postString: RequestManager.getPostStringCreatePost(post: post, token: token))
+    }
+    
+    static func updatePost(post: Post, token : String) -> [String: Any]{
+       return RequestManager.patchRequest(url: urlUpdatePost, postString: RequestManager.getPostStringUpdatePost(post: post, token: token))
     }
     
     static func getAllPost() -> PostSet{
@@ -56,7 +67,7 @@ class RequestManager : Identifiable{
             let user = User(id : id.description, pseudo : pseudo.description)
             
             
-            allPost.add(post : Post(id : post["_id"] as! String, description : post["description"] as! String, libelle: post["libelle"] as! String, categ : post["categorie"] as! String, likeTab : post["like"] as! [User], dislikeTab: post["dislike"] as! [User], signalementTab: post["signalement"] as! [User], user: user, reponses: post["reponses"] as! [Reponse], dateCreation: getDateSwift(d: post["create"] as! String)))
+            allPost.add(post : Post(id : post["_id"] as! String, description : post["description"] as! String, libelle: post["libelle"] as! String, categ : post["categorie"] as! String, likeTab : post["like"] as! [String], dislikeTab: post["dislike"] as! [String], signalementTab: post["signalement"] as! [String], user: user, reponses: post["reponses"] as! [Reponse], dateCreation: getDateSwift(d: post["create"] as! String)))
  
             
         }
@@ -64,7 +75,32 @@ class RequestManager : Identifiable{
     }
     
     static func addLikePost(postId : String, token : String) -> [String:Any]{
-        return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringAddLike(postId: postId, token: token))
+        return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
+    }
+    
+    static func getPostStringPostToken(postId : String, token: String) -> String{
+        let string = "postId=" + postId + "&token=" + token
+        return string
+    }
+    
+    static func deleteLikePost(postId : String, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlDeleteLike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
+    }
+    
+    static func addDislikePost(postId : String, token: String) -> [String: Any]{
+        return RequestManager.patchRequest(url: urlAddDislike,postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
+    }
+    
+    static func deleteDislikePost(postId : String, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlDeleteDislike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
+    }
+    
+    static func addSignalementPost(postId : String, token: String) -> [String: Any]{
+        return RequestManager.patchRequest(url: urlAddSignalement,postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
+    }
+    
+    static func deleteSignalementPost(postId : String, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlDeleteSignalement, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
     }
     
     static func getUser(token: String) -> User{
@@ -77,10 +113,7 @@ class RequestManager : Identifiable{
         return User()
     }
     
-    static func getPostStringAddLike(postId : String, token: String) -> String{
-        let string = "postId=" + postId + "&token=" + token
-        return string
-    }
+   
     
     static func getPostStringSignUp(user : User) -> String{
         let birthday = getDateJS(date: user.birthday)
@@ -98,6 +131,11 @@ class RequestManager : Identifiable{
     
     static func getPostStringCreatePost(post : Post, token: String) -> String{
         return "description=" + post.description + "&libelle=" + post.libelle + "&token=" + token + "&categorie=" + post.categ
+    }
+    
+    static func getPostStringUpdatePost(post : Post, token: String) -> String{
+        return "postId=" + post.id + "&description=" + post.description + "&libelle=" + post.libelle + "&categorie=" + post.categ + "&token=" + token
+        
     }
     
     static func getDateJS(date : Date) -> String{

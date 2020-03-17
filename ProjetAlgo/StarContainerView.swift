@@ -20,9 +20,19 @@ struct StarContainerView : View {
 
                Image(systemName: "star.fill")
                    .font(.subheadline)
-                   .foregroundColor(.yellow)
+                   .foregroundColor(.green)
            }
            .padding(.leading, 10)
+        Spacer()
+            HStack(alignment: .center) {
+             Text(post.dislikeTab.count.description)
+                    .padding(.top, 2)
+
+                Image(systemName: "star.fill")
+                    .font(.subheadline)
+                    .foregroundColor(.red)
+            }
+            .padding(.leading, 10)
        }
    }
 }

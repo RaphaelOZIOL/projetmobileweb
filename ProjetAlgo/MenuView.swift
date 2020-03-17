@@ -106,6 +106,7 @@ struct MenuView: View {
                         self.settings.nom = ""
                         self.settings.prenom = ""
                         self.settings.token = ""
+                        
                     }) {
                         Text("Se déconnecter")
                             .foregroundColor(.gray)

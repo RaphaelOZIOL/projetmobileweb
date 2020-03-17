@@ -1,41 +1,41 @@
 //
-//  createPostView.swift
+//  editPostView.swift
 //  ProjetAlgo
 //
-//  Created by user165002 on 3/4/20.
+//  Created by user165002 on 3/17/20.
 //  Copyright © 2020 user165002. All rights reserved.
 //
 
 import SwiftUI
 
-struct CreatePostView: View {
-    @Binding var showMenu: Bool
+struct EditPostView: View {
+    
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var settings: userSettings
-    @ObservedObject var postList : PostSet
-    @State var description : String = ""
-    @State var libelle : String = ""
-    @State var categorie = 0
+    @ObservedObject var post:Post
+    @State var categorie:Int
     
     var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
     
     
     var body: some View {
+        
+        return(
         Form{
     
-        Section(header : Text("Création d'un post")
+        Section(header : Text("Modifier votre post")
             .font(.largeTitle)
             .foregroundColor(Color.blue)
             .bold()){
         HStack(alignment: .center){
             Text("Titre : ")
                 .multilineTextAlignment(.center)
-            TextField("Titre", text: $description)
+            TextField("Titre", text: $post.description)
         }
         HStack(alignment: .center){
             Text("Contenu : ")
                 .multilineTextAlignment(.center)
-            TextField("Contenu", text: $libelle)
+            TextField("Contenu", text: $post.libelle)
                 .frame(height: 200)
         }
         HStack(alignment: .center){
@@ -49,34 +49,29 @@ struct CreatePostView: View {
             }
         }
         Button(action: {
-            let likeTab: [String] = []
-            let disLikeTab: [String] = []
-            let signalementTab: [String] = []
-            let reponse: [Reponse] = []
-            let post = Post(id: "0", description: self.description, libelle: self.libelle, categ: self.cat[self.categorie], likeTab: likeTab, dislikeTab: disLikeTab, signalementTab: signalementTab, user: User(), reponses: reponse, dateCreation: Date())
                 
-
-            var r = RequestManager.createPost(post: post, token : self.settings.token)
+            self.post.categ = self.cat[self.categorie]
+            print(self.post)
+            var r = RequestManager.updatePost(post: self.post, token : self.settings.token)
                 
                 if(r["text"] as! String != "Succès"){
                     print("La requete a echoué")
                 }
                 else{
-                    self.showMenu = false
-                    self.postList.add(post : post)
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }) {
-                Text("Poster")
+                Text("Modifier")
             }
                 }
             }
+        )
         }
 }
 /*
-struct createPostView_Previews: PreviewProvider {
+struct EditPostView_Previews: PreviewProvider {
     static var previews: some View {
-        createPostView()
+        EditPostView()
     }
 }
 */
