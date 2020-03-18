@@ -24,7 +24,7 @@ struct PostDetailledView: View {
                 categorie = i
             }
         }
-        if(settings.id == post.user.id.description){
+        if(self.settings.id == post.user.id.description){
          return AnyView(
              
          HStack {

@@ -23,6 +23,8 @@ class RequestManager : Identifiable{
     static var urlAddSignalement = URL(string : "https://projetmobileweb.herokuapp.com/post/addSignalement")
     static var urlDeleteSignalement = URL(string : "https://projetmobileweb.herokuapp.com/post/addSignalement")
     static var urlUpdatePost = URL(string : "https://projetmobileweb.herokuapp.com/post/update")
+    static var urlGetPostById = URL(string : "https://projetmobileweb.herokuapp.com/post/get/getAllMyPosts/") // :token
+    static var urlGetAllNotification = URL(string : "https://projetmobileweb.herokuapp.com/notification/allNotification/") //:token
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -49,8 +51,8 @@ class RequestManager : Identifiable{
        return RequestManager.patchRequest(url: urlUpdatePost, postString: RequestManager.getPostStringUpdatePost(post: post, token: token))
     }
     
-    static func getAllPost() -> PostSet{
-        let reponse = RequestManager.getRequestTab(url: urlGetAllPost)
+    static func getAllPost(url : URL) -> PostSet{
+        let reponse = RequestManager.getRequestTab(url: url)
         var allPost = PostSet(postTab : [])
         
         print(reponse)

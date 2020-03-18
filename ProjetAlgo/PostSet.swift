@@ -20,4 +20,8 @@ class PostSet : ObservableObject{
     func add(post : Post){
         postTab.append(post)
     }
+    
+    func updateTab(postTab : [Post]){
+        self.postTab = postTab
+    }
 }

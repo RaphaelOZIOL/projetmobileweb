@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MenuView: View {
+    @ObservedObject var postList : PostSet
     @Binding var showMenu: Bool
     @EnvironmentObject var settings: userSettings
     
@@ -72,21 +73,34 @@ struct MenuView: View {
                 }
                     .padding(.top, 100)
                 HStack {
-                    Image(systemName: "envelope")
-                        .foregroundColor(.gray)
-                        .imageScale(.large)
-                    Text("Notifications")
-                        .foregroundColor(.gray)
-                        .font(.headline)
+                    
+                        Image(systemName: "envelope")
+                            .foregroundColor(.gray)
+                            .imageScale(.large)
+                    
+                        Text("Notifications")
+                            .foregroundColor(.gray)
+                            .font(.headline)
+                    
                 }
                     .padding(.top, 30)
                 HStack {
-                    Image(systemName: "gear")
-                        .foregroundColor(.gray)
-                        .imageScale(.large)
-                    Text("Mes Posts")
-                        .foregroundColor(.gray)
-                        .font(.headline)
+                    Button(action : {
+                        self.showMenu.toggle()
+                        print(RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)
+                        let postSet = RequestManager.getAllPost(url: URL(string: RequestManager.urlGetPostById!.absoluteString + self.settings.token)!)
+                        self.postList.updateTab(postTab: postSet.postTab)
+                        
+                        
+                    }){
+                        Image(systemName: "gear")
+                            .foregroundColor(.gray)
+                            .imageScale(.large)
+                        Text("Mes Posts")
+                            .foregroundColor(.gray)
+                            .font(.headline)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
                     .padding(.top, 30)
                 HStack {
@@ -106,7 +120,7 @@ struct MenuView: View {
                         self.settings.nom = ""
                         self.settings.prenom = ""
                         self.settings.token = ""
-                        
+                        self.settings.id = ""
                     }) {
                         Text("Se déconnecter")
                             .foregroundColor(.gray)

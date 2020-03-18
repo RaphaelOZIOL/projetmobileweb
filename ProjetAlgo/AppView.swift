@@ -11,7 +11,7 @@ import Combine
 
 struct AppView: View{
     @State var showMenu = false
-    @ObservedObject var postList = RequestManager.getAllPost()
+    @ObservedObject var postList = RequestManager.getAllPost(url : RequestManager.urlGetAllPost!)
     @EnvironmentObject var settings: userSettings
     
     var body: some View {
@@ -33,7 +33,7 @@ struct AppView: View{
                             .disabled(self.showMenu ? true : false)
                             
                             if self.showMenu {
-                                MenuView(showMenu : self.$showMenu).frame(width: geometry.size.width/2)
+                                MenuView(postList : self.postList ,showMenu : self.$showMenu).frame(width: geometry.size.width/2)
                                     .transition(.move(edge: .trailing))
                             }
                         }.gesture(drag)
@@ -72,7 +72,7 @@ struct AppView: View{
                             .disabled(self.showMenu ? true : false)
                             
                             if self.showMenu {
-                                MenuView(showMenu : self.$showMenu).frame(width: geometry.size.width/2)
+                                MenuView(postList : self.postList ,showMenu : self.$showMenu).frame(width: geometry.size.width/2)
                                     .transition(.move(edge: .trailing))
                             }
                         }.gesture(drag)
