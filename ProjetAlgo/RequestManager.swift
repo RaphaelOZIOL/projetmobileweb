@@ -27,6 +27,12 @@ class RequestManager : Identifiable{
     static var urlGetAllNotification = URL(string : "https://projetmobileweb.herokuapp.com/notification/allNotification/") //:token
     static var urlGetAllReponses = URL(string : "https://projetmobileweb.herokuapp.com/post/allReponse/") //postId
     static var urlCreateReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/create") //postId
+    static var urlAddLikeReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/addLike")
+    static var urlDeleteLikeReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/deleteLike")//postId token
+    static var urlAddDislikeReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/addDislike")
+    static var urlDeleteDislikeReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/deleteDislike")//postId token
+    static var urlAddSignalementReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/addSignalement")
+    static var urlDeleteSignalementReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/addSignalement")
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -115,6 +121,11 @@ class RequestManager : Identifiable{
         return string
     }
     
+    static func getPostStringPostToken(reponseId : String, token: String) -> String{
+           let string = "reponseId=" + reponseId + "&token=" + token
+           return string
+    }
+    
     static func deleteLikePost(postId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlDeleteLike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
     }
@@ -133,6 +144,30 @@ class RequestManager : Identifiable{
     
     static func deleteSignalementPost(postId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlDeleteSignalement, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
+    }
+    
+    static func addLikeReponse(reponseId : String, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlAddLikeReponse, postString: RequestManager.getPostStringPostToken(reponseId: reponseId, token: token))
+    }
+    
+    static func deleteLikeReponse(reponseId : String, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlDeleteLikeReponse, postString: RequestManager.getPostStringPostToken(reponseId: reponseId, token: token))
+    }
+    
+    static func addDislikeReponse(reponseId : String, token: String) -> [String: Any]{
+        return RequestManager.patchRequest(url: urlAddDislikeReponse,postString: RequestManager.getPostStringPostToken(reponseId: reponseId, token: token))
+    }
+    
+    static func deleteDislikeReponse(reponseId : String, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlDeleteDislikeReponse, postString: RequestManager.getPostStringPostToken(reponseId: reponseId, token: token))
+    }
+    
+    static func addSignalementReponse(reponseId : String, token: String) -> [String: Any]{
+        return RequestManager.patchRequest(url: urlAddSignalementReponse,postString: RequestManager.getPostStringPostToken(reponseId: reponseId, token: token))
+    }
+    
+    static func deleteSignalementReponse(reponseId : String, token : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlDeleteSignalementReponse, postString: RequestManager.getPostStringPostToken(reponseId: reponseId, token: token))
     }
     
     static func getUser(token: String) -> User{

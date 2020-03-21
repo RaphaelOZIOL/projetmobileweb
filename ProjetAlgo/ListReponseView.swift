@@ -24,7 +24,7 @@ struct ListReponseView: View {
                   
               }
           }
-          Spacer()
+          //Spacer()
           }
 
        }

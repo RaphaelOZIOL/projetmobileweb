@@ -27,7 +27,7 @@ struct ListPostView : View {
                
            }
        }
-       Spacer()
+      // Spacer()
        }
 
     }

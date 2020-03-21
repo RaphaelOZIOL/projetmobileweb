@@ -81,7 +81,7 @@ struct PostDetailledView: View {
                              
                          }
                          .padding(.leading, 5)
-                         .padding([.top, .bottom], 10)
+                         //.padding([.top, .bottom], 10)
                          
                          VStack(){
                              Text(post.description) // Date
@@ -93,10 +93,11 @@ struct PostDetailledView: View {
                          }
                          
                          StarContainerPostView(post : post)
+                         ButtonsPostView(post : post)
                      }
                  
                      
-                 ButtonsPostView(post : post)
+                 
                 
                 HStack(){
                     TextField("Enter your name", text: self.$reponseText)
@@ -110,7 +111,7 @@ struct PostDetailledView: View {
                         else{
                             self.reponseList.add(reponse: Reponse(libelle : self.reponseText))
                             self.reponseText = ""
-                            self.$reponseText.animation()
+                          //  self.$reponseText.animation()
                         }
                         
                         }){
@@ -129,7 +130,7 @@ struct PostDetailledView: View {
                     
                 }
                 
-                Spacer()
+                
                 ListReponseView(reponseList : reponseList)
              }
             
@@ -189,11 +190,46 @@ struct PostDetailledView: View {
                             ButtonsPostView(post : post)
                         }
                     }
+                    
+                    HStack(){
+                        if(self.settings.token != ""){
+                            TextField("Enter your name", text: self.$reponseText)
+                            Button(action : {
+                                let reponse = RequestManager.createReponse(libelleReponse: self.reponseText, token: self.settings.token, postId: self.post.id)
+                                print(reponse)
+                                if((reponse["text"] as! String) != "Succès"){
+                                    
+                                    print("Pas connecté A")
+                                }
+                                else{
+                                    self.reponseList.add(reponse: Reponse(libelle : self.reponseText))
+                                    self.reponseText = ""
+                                  //  self.$reponseText.animation()
+                                }
+                                
+                                }){
+                                HStack{
+                                    /*Image(systemName: "safari")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)*/
+                                        
+                                    Text("Envoyer")
+                                        .font(.subheadline)
+                                        .lineLimit(2)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                            
+                        
+                    }
+                    
+                    
+                    ListReponseView(reponseList : reponseList)
                 }
-
-        }
+                }
             )
-                }
+        }
 
     }
    
