@@ -15,7 +15,7 @@ struct EditPostView: View {
     @ObservedObject var post:Post
     @State var categorie:Int
     
-    var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
+    var cat = ["Personnel","Livre","Film","Humour","Citation","Réseaux","Autre"]
     
     
     var body: some View {

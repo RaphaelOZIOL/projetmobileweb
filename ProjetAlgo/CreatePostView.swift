@@ -17,7 +17,7 @@ struct CreatePostView: View {
     @State var libelle : String = ""
     @State var categorie = 0
     
-    var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
+    var cat = ["Personnel","Livre","Film","Humour","Citation","Réseaux","Autre"]
     
     
     var body: some View {

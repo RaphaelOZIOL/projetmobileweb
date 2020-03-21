@@ -24,7 +24,7 @@ struct LoginView: View {
             VStack() {
                 Text("Appli anti-sexiste")
                     .font(.largeTitle).foregroundColor(Color.white)
-                    .padding([.top, .bottom], 40)
+                    .padding([.top, .bottom], 50)
                     .shadow(radius: 10.0, x: 20, y: 10)
                 
                 Image("IconPCS") // mettre le logo
@@ -33,7 +33,7 @@ struct LoginView: View {
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color.white, lineWidth: 4))
                     .shadow(radius: 10.0, x: 20, y: 10)
-                    .padding(.bottom, 50)
+                    .padding(.bottom, 25)
                 
                 VStack(alignment: .leading, spacing: 15) {
                     TextField("Email", text: self.$email)
@@ -78,6 +78,22 @@ struct LoginView: View {
                         .cornerRadius(15.0)
                         .shadow(radius: 10.0, x: 20, y: 10)
                 }.padding(.top, 50)
+                
+                Button(action: {
+                    //view s'inscrire
+                }) {
+                    NavigationLink(destination: SignUpView(showMenu : self.$showMenu)) {
+                        Text("S'inscrire")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 50)
+                        .background(Color.blue)
+                        .cornerRadius(15.0)
+                        .shadow(radius: 10.0, x: 20, y: 10)
+                    }
+                }.padding([.top, .bottom], 25)
+                /*
                 Spacer()
                     HStack(spacing: 0) {
                         Text("Vous n'avez pas de compte ?")
@@ -88,6 +104,7 @@ struct LoginView: View {
                             }
                         
                     }
+                */
                 }
                 .background(
                     LinearGradient(gradient: Gradient(colors: [.red, .yellow]), startPoint: .top, endPoint: .bottom)
