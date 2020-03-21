@@ -8,9 +8,10 @@
 
 import SwiftUI
 
-struct StarContainerView : View {
+struct StarContainerPostView : View {
     
    @ObservedObject var post : Post
+    
 
    var body: some View {
        HStack(alignment: .center) {
@@ -36,9 +37,9 @@ struct StarContainerView : View {
        }
    }
 }
-
+/*
 struct StarContainerView_Previews: PreviewProvider {
     static var previews: some View {
         StarContainerView(post : Post())
     }
-}
+}*/

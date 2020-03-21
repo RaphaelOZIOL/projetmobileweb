@@ -25,6 +25,7 @@ class RequestManager : Identifiable{
     static var urlUpdatePost = URL(string : "https://projetmobileweb.herokuapp.com/post/update")
     static var urlGetPostById = URL(string : "https://projetmobileweb.herokuapp.com/post/get/getAllMyPosts/") // :token
     static var urlGetAllNotification = URL(string : "https://projetmobileweb.herokuapp.com/notification/allNotification/") //:token
+    static var urlGetAllReponses = URL(string : "https://projetmobileweb.herokuapp.com/post/allReponse/") //postId
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -75,6 +76,30 @@ class RequestManager : Identifiable{
         }
         return allPost
     }
+    
+   static func getAllReponse(url : URL) -> ReponseSet{
+           let requete = RequestManager.getRequestTab(url: url)
+           var allReponse = ReponseSet(reponseTab : [])
+           
+           print(requete)
+           for reponse in requete {
+               var pseudo : NSString! = ""
+               var id : NSString! = ""
+               if let dict = reponse["userId"] as? NSDictionary
+               {
+                    pseudo = dict["pseudo"] as! NSString
+                    id = dict["_id"] as! NSString
+                   
+               }
+               
+               let user = User(id : id.description, pseudo : pseudo.description)
+               allReponse.add(reponse : Reponse(id: reponse["_id"] as! String, libelle: reponse["libelle"] as! String, likeTab: reponse["like"] as! [String],
+                                                dislikeTab: reponse["dislike"] as! [String], signalementTab: reponse["signalement"] as! [String], user: user, dateCreation: getDateSwift(d: reponse["create"] as! String)))
+    
+               
+           }
+           return allReponse
+       }
     
     static func addLikePost(postId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))

@@ -9,29 +9,29 @@
 import SwiftUI
 
 struct ListReponseView: View {
-    var reponseList = [
-          Reponse(),
-          Reponse()
-        ]
-      
-    var body: some View {
-     
-     VStack{
-         List{
-             ForEach(reponseList){rep in
-                  ReponseRowView(reponse : rep)
-                 
-             }
-         }
-         Spacer()
-         }
+     @ObservedObject var reponseList : ReponseSet
+       
+     var body: some View {
+     // NavigationView{
+      VStack{
+          List{
+           ForEach(reponseList.reponseTab){reponse in
+               
+                   ReponseRowView(reponse : reponse)
+               
+               
+               
+                  
+              }
+          }
+          Spacer()
+          }
 
-      }
-    
+       }
 }
-
+/*
 struct ListReponseView_Previews: PreviewProvider {
     static var previews: some View {
         ListReponseView()
     }
-}
+}*/

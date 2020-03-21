@@ -11,30 +11,19 @@ import Foundation
 import Combine
 import SwiftUI
 
-class Reponse : Identifiable{
-    
-    var libelle : String
-    var likeTab : [User]
-    var dislikeTab : [User]
-    var signalementTab : [User]
-    var pseudo : String
-    var dateCreation : Date
+class Reponse : AbstractPost,Identifiable{
     
    
     
-    init (libelle : String , likeTab : [User], dislikeTab : [User],
-          signalementTab : [User], pseudo : String, dateCreation : Date){
-        
-        self.libelle = libelle
-        self.likeTab = likeTab
-        self.dislikeTab = dislikeTab
-        self.signalementTab = signalementTab
-        self.pseudo = pseudo
-        self.dateCreation = dateCreation
+    override init (id: String, libelle : String , likeTab : [String], dislikeTab : [String],
+          signalementTab : [String], user : User, dateCreation : Date){
+    
+        super.init(id : id, libelle : libelle , likeTab : likeTab, dislikeTab : dislikeTab,
+        signalementTab : signalementTab, user : user, dateCreation : dateCreation)
     }
     
     convenience init(){
-        self.init(libelle : "", likeTab : [], dislikeTab : [], signalementTab : [], pseudo : "hugoleboss",dateCreation : Date())
+        self.init(id : "",libelle : "", likeTab : [], dislikeTab : [], signalementTab : [], user : User(),dateCreation : Date())
     }
     
 

@@ -11,12 +11,19 @@ import SwiftUI
 struct PostDetailledView: View {
     
     @ObservedObject var post : Post
+    @ObservedObject var reponseList : ReponseSet //RequestManager.getAllReponse(url : URL(string: RequestManager.urlGetAllReponses!.absoluteString + post.id)!)
     @EnvironmentObject var settings: userSettings
     var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
         
     
+    init(post : Post){
+        self.post = post
+        self.reponseList = RequestManager.getAllReponse(url : URL(string: RequestManager.urlGetAllReponses!.absoluteString + post.id)!)
+    }
     
     var body: some View {
+        
+        
         var categorie:Int = 0
         let c = cat.count
         for i in 0..<c {
@@ -84,12 +91,14 @@ struct PostDetailledView: View {
                              
                          }
                          
-                         StarContainerView(post : post)
+                         StarContainerPostView(post : post)
                      }
                  
                      
                  ButtonsPostView(post : post)
              }
+            Spacer()
+            ListReponseView(reponseList : reponseList)
             }
         )
         }
@@ -136,11 +145,15 @@ struct PostDetailledView: View {
                                 
                             }
                             
-                            StarContainerView(post : post)
+                            StarContainerPostView(post : post)
                         }
                     
                         
-                    ButtonsPostView(post : post)
+                    HStack{
+                        if(self.settings.token != ""){
+                            ButtonsPostView(post : post)
+                        }
+                    }
                 }
 
         }

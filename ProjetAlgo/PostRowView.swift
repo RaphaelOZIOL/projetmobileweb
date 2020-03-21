@@ -12,6 +12,7 @@ struct PostRowView: View {
     
    
     @ObservedObject var post : Post
+    @EnvironmentObject var settings: userSettings
     
     
     var body: some View {
@@ -57,11 +58,14 @@ struct PostRowView: View {
                             
                         }
                         
-                        StarContainerView(post : post)
+                        StarContainerPostView(post : post)
                     }
                 }.navigationBarTitle(Text("Fil d'actualité"))
-                    
-                ButtonsPostView(post : post)
+                HStack{
+                    if(self.settings.token != ""){
+                        ButtonsPostView(post : post)
+                    }
+                }
             }
         }
 

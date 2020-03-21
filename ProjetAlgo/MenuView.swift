@@ -87,7 +87,7 @@ struct MenuView: View {
                 HStack {
                     Button(action : {
                         self.showMenu.toggle()
-                        print(RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)
+                        //print(RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)
                         let postSet = RequestManager.getAllPost(url: URL(string: RequestManager.urlGetPostById!.absoluteString + self.settings.token)!)
                         self.postList.updateTab(postTab: postSet.postTab)
                         
@@ -121,6 +121,9 @@ struct MenuView: View {
                         self.settings.prenom = ""
                         self.settings.token = ""
                         self.settings.id = ""
+                        let postSet = RequestManager.getAllPost(url: RequestManager.urlGetAllPost!)
+                        self.postList.updateTab(postTab: postSet.postTab)
+                        self.showMenu.toggle()
                     }) {
                         Text("Se déconnecter")
                             .foregroundColor(.gray)
