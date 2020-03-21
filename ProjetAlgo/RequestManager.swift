@@ -26,6 +26,7 @@ class RequestManager : Identifiable{
     static var urlGetPostById = URL(string : "https://projetmobileweb.herokuapp.com/post/get/getAllMyPosts/") // :token
     static var urlGetAllNotification = URL(string : "https://projetmobileweb.herokuapp.com/notification/allNotification/") //:token
     static var urlGetAllReponses = URL(string : "https://projetmobileweb.herokuapp.com/post/allReponse/") //postId
+    static var urlCreateReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/create") //postId
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -42,6 +43,10 @@ class RequestManager : Identifiable{
     
     static func updateUserRequest(user : User, token: String) -> [String: Any]{
         return RequestManager.patchRequest(url: urlUpdateUser,postString: RequestManager.getPostStringUpdateUser(user: user, token: token))
+    }
+    
+    static func createReponse(libelleReponse : String, token: String, postId : String) -> [String: Any]{
+        return RequestManager.postRequest(url: urlCreateReponse,postString: RequestManager.getPostStringCreateReponse(libelleReponse: libelleReponse, token: token, postId: postId))
     }
     
     static func createPost(post : Post, token: String) -> [String: Any]{
@@ -154,6 +159,10 @@ class RequestManager : Identifiable{
         let string1 = "token=" + token + "&email=" + user.email + "&pseudo=" + user.pseudo + "&firstname=" + user.firstname
         let string2 = "&lastname=" + user.lastname + "&birthday=" + birthday + "&adress=" + user.adress + "&tel=" + user.tel
         return string1 + string2
+    }
+    
+    static func getPostStringCreateReponse(libelleReponse: String, token: String, postId: String) -> String{
+        return "libelle=" + libelleReponse + "&token=" + token + "&postId=" + postId;
     }
     
     static func getPostStringCreatePost(post : Post, token: String) -> String{

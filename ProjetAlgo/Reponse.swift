@@ -22,8 +22,8 @@ class Reponse : AbstractPost,Identifiable{
         signalementTab : signalementTab, user : user, dateCreation : dateCreation)
     }
     
-    convenience init(){
-        self.init(id : "",libelle : "", likeTab : [], dislikeTab : [], signalementTab : [], user : User(),dateCreation : Date())
+    convenience init(libelle : String){
+        self.init(id : "",libelle : libelle, likeTab : [], dislikeTab : [], signalementTab : [], user : User(),dateCreation : Date())
     }
     
 

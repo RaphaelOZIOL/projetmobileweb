@@ -13,6 +13,7 @@ struct PostDetailledView: View {
     @ObservedObject var post : Post
     @ObservedObject var reponseList : ReponseSet //RequestManager.getAllReponse(url : URL(string: RequestManager.urlGetAllReponses!.absoluteString + post.id)!)
     @EnvironmentObject var settings: userSettings
+    @State var reponseText : String = ""
     var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
         
     
@@ -96,9 +97,43 @@ struct PostDetailledView: View {
                  
                      
                  ButtonsPostView(post : post)
+                
+                HStack(){
+                    TextField("Enter your name", text: self.$reponseText)
+                    Button(action : {
+                        let reponse = RequestManager.createReponse(libelleReponse: self.reponseText, token: self.settings.token, postId: self.post.id)
+                        print(reponse)
+                        if((reponse["text"] as! String) != "Succès"){
+                            
+                            print("Pas connecté A")
+                        }
+                        else{
+                            self.reponseList.add(reponse: Reponse(libelle : self.reponseText))
+                            self.reponseText = ""
+                            self.$reponseText.animation()
+                        }
+                        
+                        }){
+                        HStack{
+                            /*Image(systemName: "safari")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)*/
+                                
+                            Text("Envoyer")
+                                .font(.subheadline)
+                                .lineLimit(2)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                        
+                    
+                }
+                
+                Spacer()
+                ListReponseView(reponseList : reponseList)
              }
-            Spacer()
-            ListReponseView(reponseList : reponseList)
+            
+            
             }
         )
         }

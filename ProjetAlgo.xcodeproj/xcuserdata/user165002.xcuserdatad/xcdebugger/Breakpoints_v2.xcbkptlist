@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
             endingLineNumber = "53"
-            landmarkName = "updatePost(post:token:)"
+            landmarkName = "createPost(post:token:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -32,8 +32,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "156"
             endingLineNumber = "156"
-            landmarkName = "getPostStringUpdateUser(user:token:)"
-            landmarkType = "7">
+            landmarkName = "RequestManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -64,7 +64,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
             endingLineNumber = "57"
-            landmarkName = "getAllPost(url:)"
+            landmarkName = "updatePost(post:token:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
