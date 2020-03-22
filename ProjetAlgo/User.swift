@@ -19,14 +19,14 @@ class User : Identifiable{
     var firstname : String
     var lastname : String
     var birthday : Date
-    var notifTab : [NotificationPost]
+    var notifTab : NotificationSet
     var adress : String
     var tel : String
     var isAdmin : Bool
         
     
     
-    init (id : String, email : String , password : String, pseudo : String, firstname : String, lastname : String, birthday : Date, notifTab : [NotificationPost], adress : String, tel : String, isAdmin : Bool){
+    init (id : String, email : String , password : String, pseudo : String, firstname : String, lastname : String, birthday : Date, notifTab : NotificationSet, adress : String, tel : String, isAdmin : Bool){
         
         self.id = id
         self.email = email
@@ -42,18 +42,18 @@ class User : Identifiable{
     }
     
     convenience init(email : String , pseudo : String, firstname : String, lastname : String, birthday : Date, adress : String, tel : String){
-        self.init(id: "0", email: email, password: "", pseudo: pseudo, firstname: firstname, lastname: lastname, birthday:birthday, notifTab: [], adress: adress, tel: tel, isAdmin: false)
+        self.init(id: "0", email: email, password: "", pseudo: pseudo, firstname: firstname, lastname: lastname, birthday:birthday, notifTab: NotificationSet(notifTab: []), adress: adress, tel: tel, isAdmin: false)
     }
     
     convenience init(){
-        self.init(id: "0", email: "", password: "", pseudo: "", firstname: "", lastname: "", birthday: Date(), notifTab: [], adress: "", tel: "", isAdmin: false)
+        self.init(id: "0", email: "", password: "", pseudo: "", firstname: "", lastname: "", birthday: Date(), notifTab: NotificationSet(notifTab: []), adress: "", tel: "", isAdmin: false)
     }
     
     convenience init(id : String, pseudo : String){
-        self.init(id: id, email: "", password: "", pseudo: pseudo, firstname: "", lastname: "", birthday: Date(), notifTab: [], adress: "", tel: "", isAdmin: false)
+        self.init(id: id, email: "", password: "", pseudo: pseudo, firstname: "", lastname: "", birthday: Date(), notifTab: NotificationSet(notifTab: []), adress: "", tel: "", isAdmin: false)
     }
     convenience init(id : String){
-        self.init(id: id, email: "", password: "", pseudo: "", firstname: "", lastname: "", birthday: Date(), notifTab: [], adress: "", tel: "", isAdmin: false)
+        self.init(id: id, email: "", password: "", pseudo: "", firstname: "", lastname: "", birthday: Date(), notifTab: NotificationSet(notifTab: []), adress: "", tel: "", isAdmin: false)
     }
     
 }

@@ -30,6 +30,10 @@ class Post : AbstractPost, Identifiable{
     }
     
 
+    convenience init(id: String){
+        self.init(id: id, description: "", libelle: "", categ: "", likeTab: [], dislikeTab: [], signalementTab: [], user: User(), reponses: [], dateCreation: Date())
+    }
+    
     convenience init(){
         self.init(id: "0", description: "harcelement dans le métro", libelle: "Je me suis faite insultée dans le métro", categ: "harcèlement", likeTab: [], dislikeTab: [], signalementTab: [], user: User(), reponses: [Reponse()], dateCreation: Date())
     }

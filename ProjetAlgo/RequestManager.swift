@@ -112,6 +112,28 @@ class RequestManager : Identifiable{
            return allReponse
        }
     
+    static func getAllNotification(url : URL) -> NotificationSet{
+           let requete = RequestManager.getRequestTab(url: url)
+           var allNotif = NotificationSet(notifTab : [])
+           
+           print(requete)
+           for notif in requete {
+
+                var id : NSString! = ""
+                if let dict = notif["postId"] as? NSDictionary
+                {
+                    id = dict["_id"] as! NSString
+                                  
+                }
+                
+                let post = Post(id : id.description)
+                allNotif.add(notif : NotificationPost(id: notif["_id"] as! String, post : post, estVu : notif["vue"] as! Bool, dateCreation : getDateSwift(d: notif["create"] as! String)))
+    
+               
+           }
+           return allNotif
+       }
+    
     static func addLikePost(postId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
     }

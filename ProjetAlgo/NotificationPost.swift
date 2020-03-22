@@ -13,12 +13,12 @@ import SwiftUI
 
 class NotificationPost : Identifiable{
     
-    var id: Int
+    var id: String
     var post : Post
     var estVu : Bool
     var dateCreation : Date
     
-    init (post : Post , estVu : Bool, id : Int, dateCreation : Date){
+    init (id : String, post : Post , estVu : Bool, dateCreation : Date){
         self.id = id
         self.post = post
         self.estVu = estVu
@@ -26,7 +26,7 @@ class NotificationPost : Identifiable{
     }
     
     convenience init(){
-        self.init(post : Post(), estVu : true, id : 2, dateCreation : Date())
+        self.init(id : "", post : Post(), estVu : false, dateCreation : Date())
     }
     
 }

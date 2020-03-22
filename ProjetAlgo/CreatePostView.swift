@@ -63,7 +63,7 @@ struct CreatePostView: View {
                 }
                 else{
                     self.showMenu = false
-                    self.postList.add(post : post)
+                    self.postList.updateTab(postTab: (RequestManager.getAllPost(url : RequestManager.urlGetAllPost!)).postTab)
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }) {

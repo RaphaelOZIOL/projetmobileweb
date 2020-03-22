@@ -43,7 +43,18 @@ struct PostRowView: View {
                                     .lineLimit(nil)
                                     .layoutPriority(999)
                             }
-                            
+                            VStack(alignment: .trailing, spacing: 5) {
+                                
+                                if(self.settings.notifTab.estPasVuByPost(postId: post.id)){
+                                    Image(systemName: "person.crop.circle")
+                                    .font(.subheadline)
+                                    .padding(.top, 5)
+                                    .foregroundColor(.secondary)
+                                }
+                                // A VOIR POUR SI PAS DE NOTIF
+                                
+                                
+                            }
                             
                         }
                         .padding(.leading, 5)
@@ -59,7 +70,10 @@ struct PostRowView: View {
                         }
                         
                         StarContainerPostView(post : post)
-                    }
+                    }.simultaneousGesture(TapGesture().onEnded{
+                        
+                        self.settings.notifTab.setEstVuByPost(postId: self.post.id)
+                    })
                 }.navigationBarTitle(Text("Fil d'actualité"))
                 HStack{
                     if(self.settings.token != ""){

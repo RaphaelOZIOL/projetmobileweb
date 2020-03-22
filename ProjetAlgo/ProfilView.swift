@@ -67,7 +67,7 @@ struct ProfilView: View {
             }
 
             Button(action: {
-                let tabNotif: [NotificationPost] = []
+                let tabNotif: NotificationSet = NotificationSet(notifTab: [])
                 let user = User(id: "0", email: self.email, password: "", pseudo: self.pseudo, firstname: self.firstname, lastname: self.lastname, birthday: self.birthday, notifTab: tabNotif, adress: self.adress, tel: self.tel, isAdmin: false)
                 
 
