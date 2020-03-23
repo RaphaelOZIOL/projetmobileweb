@@ -107,6 +107,7 @@
 		86E6A9FC2412A200007B2938 /* IconPCS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IconPCS.png; path = ../../../Downloads/IconPCS.png; sourceTree = "<group>"; };
 		86F50AD9240D334500774275 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		86FA0FF02427B861009116C5 /* NotificationSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSet.swift; sourceTree = "<group>"; };
+		86FDF2182428EC5200C92EF9 /* UserSettings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UserSettings.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +195,7 @@
 				86254129241D4839001CFDCA /* PostSet.swift */,
 				866EE7AE2421217B00CF6F9B /* EditPostView.swift */,
 				8688E8172426606300F0B03F /* AbstractPost.swift */,
+				86FDF2182428EC5200C92EF9 /* UserSettings.json */,
 			);
 			path = ProjetAlgo;
 			sourceTree = "<group>";

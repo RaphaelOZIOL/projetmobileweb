@@ -102,7 +102,7 @@ struct PostDetailledView: View {
                  
                 if(self.settings.token != ""){
                     HStack(){
-                        TextField("Enter your name", text: self.$reponseText)
+                        TextField("Entrer votre réponse", text: self.$reponseText)
                         Button(action : {
                             let reponse = RequestManager.createReponse(libelleReponse: self.reponseText, token: self.settings.token, postId: self.post.id)
                             print(reponse)

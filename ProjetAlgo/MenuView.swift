@@ -121,6 +121,7 @@ struct MenuView: View {
                         self.settings.prenom = ""
                         self.settings.token = ""
                         self.settings.id = ""
+                        self.settings.writeJson()
                         let postSet = RequestManager.getAllPost(url: RequestManager.urlGetAllPost!)
                         self.postList.updateTab(postTab: postSet.postTab)
                         self.showMenu.toggle()
