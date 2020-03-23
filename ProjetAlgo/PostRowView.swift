@@ -54,7 +54,8 @@ struct PostRowView: View {
                                         (Image(systemName: "person.crop.circle")
                                         .font(.subheadline)
                                         .padding(.top, 5)
-                                        .foregroundColor(.secondary))
+                                            .foregroundColor(.secondary))
+                                    
                                         //.disabled(self.settings.notifTab.estPasVuByPost(postId: post.id) ? true : false)
                                     
                                     

@@ -45,7 +45,7 @@ struct ButtonsPostView: View {
                                 }
                                 }){
                                 HStack{
-                                    Image(systemName: "safari")
+                                    Image(systemName: "like")
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
                                         

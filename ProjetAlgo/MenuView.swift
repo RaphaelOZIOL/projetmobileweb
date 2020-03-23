@@ -59,6 +59,20 @@ struct MenuView: View {
         }
         else{
             return AnyView(VStack(alignment: .leading) {
+                
+            
+                HStack(alignment: .center) {
+                   
+                    Text(self.settings.prenom)
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                    Text(self.settings.nom)
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                    
+                }
+                    .padding(.top, 100)
+                
                 HStack {
                     Image(systemName: "person")
                         .foregroundColor(.gray)
@@ -71,17 +85,24 @@ struct MenuView: View {
                         
                     }
                 }
-                    .padding(.top, 100)
+                    .padding(.top, 30)
                 HStack {
-                    
+                    Button(action : {
+                        self.showMenu.toggle()
+                        //print(RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)
+                        let postSet = RequestManager.getAllPost(url: RequestManager.urlGetAllPost!)
+                        self.postList.updateTab(postTab: postSet.postTab)
+                        
+                        
+                    }){
                         Image(systemName: "envelope")
                             .foregroundColor(.gray)
                             .imageScale(.large)
                     
-                        Text("Notifications")
+                        Text("Fil d'actualité")
                             .foregroundColor(.gray)
                             .font(.headline)
-                    
+                    }
                 }
                     .padding(.top, 30)
                 HStack {

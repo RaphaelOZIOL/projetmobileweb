@@ -46,7 +46,7 @@ struct AppView: View{
                         leading: (
                             NavigationLink(destination: LoginView(showMenu : self.$showMenu)){
                                 
-                                    Image(systemName: "message")
+                                    Image(systemName: "square.and.pencil")
                                         .imageScale(.large)
 
                                 
@@ -84,7 +84,7 @@ struct AppView: View{
                     .navigationBarItems(
                         leading: (
                             NavigationLink(destination: CreatePostView(showMenu : self.$showMenu, postList : self.postList)){
-                                Image(systemName: "message")
+                                Image(systemName: "square.and.pencil")
                                     .imageScale(.large)
                             }
                         ),
