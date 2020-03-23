@@ -13,7 +13,7 @@ class userSettings: ObservableObject {
     @Published var nom = ""
     @Published var prenom = ""
     @Published var id = ""
-    @Published var notifTab = NotificationSet(notifTab: [])
+   // @Published var notifTab = NotificationSet(notifTab: [])
     
     func loadJson(fileName: String) {
             do {

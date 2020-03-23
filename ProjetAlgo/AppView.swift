@@ -12,7 +12,9 @@ import Combine
 struct AppView: View{
     @State var showMenu = false
     @ObservedObject var postList = RequestManager.getAllPost(url : RequestManager.urlGetAllPost!)
-    //@ObservedObject var notifList = RequestManager.getAllNotification(url : RequestManager.urlGetAllNotification!)
+    
+        
+       // RequestManager.getAllNotification(url : RequestManager.urlGetAllNotification!)
     @EnvironmentObject var settings: userSettings
     
     var body: some View {
@@ -115,7 +117,7 @@ struct AccueilView: View {
     
     var body: some View {
             VStack{
-                ListPostView(postList : postList)
+                ListPostView(postList : postList, token : self.settings.token)
             }
     }
 }

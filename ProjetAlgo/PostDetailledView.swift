@@ -14,17 +14,36 @@ struct PostDetailledView: View {
     @ObservedObject var reponseList : ReponseSet //RequestManager.getAllReponse(url : URL(string: RequestManager.urlGetAllReponses!.absoluteString + post.id)!)
     @EnvironmentObject var settings: userSettings
     @State var reponseText : String = ""
+    @ObservedObject var notifTab : NotificationSet
     var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
         
     
-    init(post : Post){
+    init(post : Post, notifTab : NotificationSet){
         self.post = post
+        self.notifTab = notifTab
         self.reponseList = RequestManager.getAllReponse(url : URL(string: RequestManager.urlGetAllReponses!.absoluteString + post.id)!)
     }
     
     var body: some View {
-        
-        
+        var notifId = ""
+        print(self.notifTab.notifTab[0].dateCreation)
+        if(self.notifTab.notifTab.count > 0){
+            notifId = self.notifTab.getIdNotifByPostId(postId: self.post.id)
+        }
+        if(notifId != "" && self.notifTab.estPasVuByPost(postId: self.post.id)){
+            let reponse = RequestManager.setNotificationTrue(notificationId: notifId)
+         
+            if((reponse["text"] as! String) != "Succès"){
+                print("Pas connecté A")
+            }
+            else{
+                self.notifTab.setEstVuByPost(postId: self.post.id)
+            }
+        }
+        else{
+            print("Pas son post ou notif deja vu")
+        }
+   
         var categorie:Int = 0
         let c = cat.count
         for i in 0..<c {

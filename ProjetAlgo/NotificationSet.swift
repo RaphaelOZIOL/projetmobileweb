@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NotificationSet : ObservableObject{
+class NotificationSet : Identifiable, ObservableObject{
     
     @Published var notifTab : [NotificationPost]
     
@@ -36,6 +36,7 @@ class NotificationSet : ObservableObject{
     }
     
     func estPasVuByPost(postId : String) -> Bool{
+        
         for i in 0..<self.notifTab.count{
             if(self.notifTab[i].estVu != true && self.notifTab[i].post.id == postId){
                 return true
@@ -48,7 +49,32 @@ class NotificationSet : ObservableObject{
         for i in 0..<self.notifTab.count{
             if(self.notifTab[i].estVu != true && self.notifTab[i].post.id == postId){
                 self.notifTab[i].estVu = true
+                print(self.notifTab[i].post.id)
             }
         }
+    }
+    
+    func getIdNotifByPostId(postId : String) -> String{
+        var notifId = ""
+        print(self.notifTab.description)
+        for i in 0..<self.notifTab.count{
+            if(self.notifTab[i].post.id == postId){
+                print(self.notifTab[i].dateCreation)
+                notifId = self.notifTab[i].id
+            }
+        }
+        return notifId
+    }
+    
+    func getIByPostId(postId : String) -> Int{
+        var j = -1
+        print(self.notifTab.description)
+        for i in 0..<self.notifTab.count{
+            if(self.notifTab[i].post.id == postId){
+                print(self.notifTab[i].dateCreation)
+                j = i
+            }
+        }
+        return j
     }
 }

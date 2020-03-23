@@ -11,12 +11,12 @@ import Foundation
 import Combine
 import SwiftUI
 
-class NotificationPost : Identifiable{
+class NotificationPost : ObservableObject,Identifiable{
     
-    var id: String
-    var post : Post
-    var estVu : Bool
-    var dateCreation : Date
+    var id : String
+    @Published var post : Post
+    @Published var estVu : Bool
+   @Published var dateCreation : Date
     
     init (id : String, post : Post , estVu : Bool, dateCreation : Date){
         self.id = id

@@ -25,6 +25,7 @@ class RequestManager : Identifiable{
     static var urlUpdatePost = URL(string : "https://projetmobileweb.herokuapp.com/post/update")
     static var urlGetPostById = URL(string : "https://projetmobileweb.herokuapp.com/post/get/getAllMyPosts/") // :token
     static var urlGetAllNotification = URL(string : "https://projetmobileweb.herokuapp.com/notification/allNotification/") //:token
+    static var urlSetNotificationTrue = URL(string : "https://projetmobileweb.herokuapp.com/notification/vue") //:token
     static var urlGetAllReponses = URL(string : "https://projetmobileweb.herokuapp.com/post/allReponse/") //postId
     static var urlCreateReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/create") //postId
     static var urlAddLikeReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/addLike")
@@ -115,8 +116,9 @@ class RequestManager : Identifiable{
     static func getAllNotification(url : URL) -> NotificationSet{
            let requete = RequestManager.getRequestTab(url: url)
            var allNotif = NotificationSet(notifTab : [])
-           
+           print("NOTIFICATION     ")
            print(requete)
+            print("FIIIIIIIIIIIIIIIIN")
            for notif in requete {
 
                 var id : NSString! = ""
@@ -127,6 +129,7 @@ class RequestManager : Identifiable{
                 }
                 
                 let post = Post(id : id.description)
+            print(notif["_id"] as! String + "notifID")
                 allNotif.add(notif : NotificationPost(id: notif["_id"] as! String, post : post, estVu : notif["vue"] as! Bool, dateCreation : getDateSwift(d: notif["create"] as! String)))
     
                
@@ -190,6 +193,16 @@ class RequestManager : Identifiable{
     
     static func deleteSignalementReponse(reponseId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlDeleteSignalementReponse, postString: RequestManager.getPostStringPostToken(reponseId: reponseId, token: token))
+    }
+    
+    static func setNotificationTrue(notificationId : String) -> [String:Any]{
+        return RequestManager.patchRequest(url: urlSetNotificationTrue, postString: RequestManager.getPostStringNotif(notificationId: notificationId))
+    }
+    
+    static func getPostStringNotif(notificationId : String) -> String{
+        let string1 = "notificationId=" + notificationId
+
+        return string1
     }
     
     static func getUser(token: String) -> User{
