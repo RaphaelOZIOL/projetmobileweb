@@ -26,7 +26,7 @@ struct PostDetailledView: View {
     
     var body: some View {
         var notifId = ""
-        print(self.notifTab.notifTab[0].dateCreation)
+        //print(self.notifTab.notifTab[0].dateCreation)
         if(self.notifTab.notifTab.count > 0){
             notifId = self.notifTab.getIdNotifByPostId(postId: self.post.id)
         }
