@@ -66,6 +66,8 @@ class NotificationSet : Identifiable, ObservableObject{
         return notifId
     }
     
+    
+    
     func getIByPostId(postId : String) -> Int{
         var j = -1
         print(self.notifTab.description)

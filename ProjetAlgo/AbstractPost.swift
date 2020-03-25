@@ -23,7 +23,7 @@ import SwiftUI
 class AbstractPost : ObservableObject{
     
     var id : String
-    var libelle : String
+    @Published var libelle : String
     @Published var likeTab : [String]
     @Published var dislikeTab : [String]
     var signalementTab : [String]

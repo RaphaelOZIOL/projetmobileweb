@@ -125,6 +125,25 @@ struct MenuView: View {
                 }
                     .padding(.top, 30)
                 HStack {
+                    Button(action : {
+                        self.showMenu.toggle()
+                        //print(RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)
+                        let postSet = self.postList.getAllPostNotified(notifTab: RequestManager.getAllNotification(url : URL(string: RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)!))
+                        self.postList.updateTab(postTab: postSet.postTab)
+                        
+                        
+                    }){
+                        Image(systemName: "gear")
+                            .foregroundColor(.gray)
+                            .imageScale(.large)
+                        Text("Mes Notifications")
+                            .foregroundColor(.gray)
+                            .font(.headline)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+                    .padding(.top, 30)
+                HStack {
                     Image(systemName: "envelope")
                         .foregroundColor(.gray)
                         .imageScale(.large)

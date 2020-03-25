@@ -13,8 +13,8 @@ import SwiftUI
 
 class Post : AbstractPost, Identifiable{
     
-    var description: String
-    var categ : String
+    @Published var description: String
+    @Published var categ : String
     var reponses : [Reponse]
     
     

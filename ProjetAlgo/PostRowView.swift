@@ -13,9 +13,14 @@ struct PostRowView: View {
    
     @ObservedObject var post : Post
     @ObservedObject var notifTab : NotificationSet
-
+    @ObservedObject var postList : PostSet
     @EnvironmentObject var settings: userSettings
     
+    init(post : Post, notifTab : NotificationSet, postList : PostSet){
+        self.post = post
+        self.notifTab = notifTab
+        self.postList = postList
+    }
     
     var body: some View {
         let i = self.notifTab.getIByPostId(postId: self.post.id)
@@ -26,7 +31,7 @@ struct PostRowView: View {
                 VStack (alignment: .leading){
                 
                     
-                    NavigationLink(destination: PostDetailledView(post : post, notifTab : self.notifTab)) {
+                    NavigationLink(destination: PostDetailledView(post : post, notifTab : self.notifTab, postTab: self.postList)) {
                         
                         VStack (alignment: .leading){
                             HStack() {
@@ -80,7 +85,7 @@ struct PostRowView: View {
                         }/*.simultaneousGesture(TapGesture().onEnded{
                             print(self.post.id)
                            
-                           // self.notifTab.setEstVuByPost(postId: self.post.id)
+                            self.notifTab.setEstVuByPost(postId: self.post.id)
                             
                             
                         })*/
@@ -100,7 +105,7 @@ struct PostRowView: View {
                 
                 VStack (alignment: .leading){
                     
-                    NavigationLink(destination: PostDetailledView(post : post, notifTab: self.notifTab)) {
+                    NavigationLink(destination: PostDetailledView(post : post, notifTab: self.notifTab, postTab: self.postList)) {
                         
                         VStack (alignment: .leading){
                             HStack() {
@@ -110,7 +115,7 @@ struct PostRowView: View {
                                     .foregroundColor(.secondary)
 
                                 VStack(alignment: .leading, spacing: 5) {
-                                    Text(post.libelle)
+                                    Text(post.description)
                                         .font(.headline)
                                         .lineLimit(2)
                                         .layoutPriority(1000)
@@ -127,7 +132,7 @@ struct PostRowView: View {
                             .padding([.top, .bottom], 10)
                             
                             VStack(){
-                                Text(post.description) // Date
+                                Text(post.libelle) // Date
                                 .font(.caption)
                                     
                                 .lineLimit(nil)

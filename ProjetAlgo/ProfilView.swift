@@ -78,8 +78,8 @@ struct ProfilView: View {
                 }
                 else{
                     self.settings.token = reponse["token"] as! String
-                    self.settings.nom = reponse["nom"] as! String
-                    self.settings.prenom = reponse["prenom"] as! String
+                    self.settings.nom = self.lastname
+                    self.settings.prenom = self.firstname
                     self.settings.id = reponse["_id"] as! String
                     self.showMenu = false
                     self.presentationMode.wrappedValue.dismiss()

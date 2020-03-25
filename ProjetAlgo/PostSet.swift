@@ -24,4 +24,17 @@ class PostSet : ObservableObject{
     func updateTab(postTab : [Post]){
         self.postTab = postTab
     }
+    
+    func getAllPostNotified(notifTab : NotificationSet) -> PostSet{
+        var postList = PostSet(postTab: [])
+        for i in 0..<notifTab.notifTab.count{
+            for j in 0..<self.postTab.count{
+                if(notifTab.notifTab[i].post.id == self.postTab[j].id && notifTab.notifTab[i].estVu == false){
+                    postList.add(post: self.postTab[j])
+                    
+                }
+            }
+        }
+        return postList
+    }
 }

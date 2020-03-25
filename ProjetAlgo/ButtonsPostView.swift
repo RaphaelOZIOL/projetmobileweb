@@ -103,7 +103,7 @@ struct ButtonsPostView: View {
                                                     
                                 if(!self.post.isSignaled(user: self.settings.id)){
                                     let reponse = RequestManager.addSignalementPost(postId: self.post.id, token: self.settings.token)
-                                    print()
+                
                                     if((reponse["text"] as! String) != "Succès"){
                                         
                                         print("Pas connecté A")

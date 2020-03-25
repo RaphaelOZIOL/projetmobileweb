@@ -21,7 +21,7 @@ class RequestManager : Identifiable{
     static var urlAddDislike = URL(string : "https://projetmobileweb.herokuapp.com/post/addDislike")
     static var urlDeleteDislike = URL(string : "https://projetmobileweb.herokuapp.com/post/deleteDislike")//postId token
     static var urlAddSignalement = URL(string : "https://projetmobileweb.herokuapp.com/post/addSignalement")
-    static var urlDeleteSignalement = URL(string : "https://projetmobileweb.herokuapp.com/post/addSignalement")
+    static var urlDeleteSignalement = URL(string : "https://projetmobileweb.herokuapp.com/post/deleteSignalement")
     static var urlUpdatePost = URL(string : "https://projetmobileweb.herokuapp.com/post/update")
     static var urlGetPostById = URL(string : "https://projetmobileweb.herokuapp.com/post/get/getAllMyPosts/") // :token
     static var urlGetAllNotification = URL(string : "https://projetmobileweb.herokuapp.com/notification/allNotification/") //:token
@@ -136,6 +136,45 @@ class RequestManager : Identifiable{
            }
            return allNotif
        }
+   /* static func getAllNotificationPost(url : URL) -> PostSet{
+           let requete = RequestManager.getRequestTab(url: url)
+           var allNotifPost = PostSet(postTab: [])
+           print("NOTIFICATION     ")
+           print(requete)
+            print("FIIIIIIIIIIIIIIIIN")
+           for post in requete {
+
+                var id : NSString! = ""
+                var like : [NSString] = []
+                var dislike : [NSString] = []
+                var signalement : [NSString] = []
+                var reponse : [NSString] = []
+                var description : NSString! = ""
+                var libelle : NSString! = ""
+                var userId : NSString! = ""
+                var categorie : NSString! = ""
+                var date : NSDate! = NSDate()
+                if let dict = post["postId"] as? NSDictionary
+                {
+                    id = dict["_id"] as! NSString
+                    like = dict["like"] as! [NSString]
+                    dislike = dict["dislike"] as! [NSString]
+                    signalement = dict["signalement"] as! [NSString]
+                    reponse = dict["reponse"] as! [NSString]
+                    description = dict["description"] as! NSString
+                    libelle = dict["libelle"] as! NSString
+                    id = dict["_id"] as! NSString
+                    id = dict["_id"] as! NSString
+                }
+                
+                let post = Post(id : id.description)
+            
+                allNotifPost.add(post: post)
+    
+               
+           }
+           return allNotifPost
+       }*/
     
     static func addLikePost(postId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))

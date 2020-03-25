@@ -15,13 +15,15 @@ struct PostDetailledView: View {
     @EnvironmentObject var settings: userSettings
     @State var reponseText : String = ""
     @ObservedObject var notifTab : NotificationSet
+    @ObservedObject var postTab : PostSet
     var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
         
     
-    init(post : Post, notifTab : NotificationSet){
+    init(post : Post, notifTab : NotificationSet, postTab : PostSet){
         self.post = post
         self.notifTab = notifTab
         self.reponseList = RequestManager.getAllReponse(url : URL(string: RequestManager.urlGetAllReponses!.absoluteString + post.id)!)
+        self.postTab = postTab
     }
     
     var body: some View {
@@ -38,6 +40,8 @@ struct PostDetailledView: View {
             }
             else{
                 self.notifTab.setEstVuByPost(postId: self.post.id)
+                let postSet = self.postTab.getAllPostNotified(notifTab: RequestManager.getAllNotification(url : URL(string: RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)!))
+                self.postTab.updateTab(postTab: postSet.postTab)
             }
         }
         else{
@@ -67,7 +71,7 @@ struct PostDetailledView: View {
                                  .foregroundColor(.secondary)
 
                              VStack(alignment: .leading, spacing: 5) {
-                                 Text(post.libelle)
+                                 Text(post.description)
                                      .font(.headline)
                                      .lineLimit(2)
                                      .layoutPriority(1000)
@@ -103,7 +107,7 @@ struct PostDetailledView: View {
                          //.padding([.top, .bottom], 10)
                          
                          VStack(){
-                             Text(post.description) // Date
+                             Text(post.libelle) // Date
                              .font(.caption)
                                  
                              .lineLimit(nil)

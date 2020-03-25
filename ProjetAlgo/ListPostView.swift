@@ -19,7 +19,9 @@ struct ListPostView : View {
     
     init(postList : PostSet, token : String){
         self.postList = postList
+        
         if(token != ""){
+            print(token)
             self.notifList = RequestManager.getAllNotification(url : URL(string: RequestManager.urlGetAllNotification!.absoluteString + token)!)
         }
         else{
@@ -68,7 +70,7 @@ struct ListPostView : View {
             // Filtered list of names
             ForEach(postList.postTab.filter{($0.libelle.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased())) || searchText == ""}){post in
                
-               PostRowView(post : post, notifTab: self.notifList)
+                PostRowView(post : post, notifTab: self.notifList, postList : self.postList)
                
             
               }

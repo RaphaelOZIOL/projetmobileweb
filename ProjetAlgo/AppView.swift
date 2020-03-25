@@ -16,6 +16,7 @@ struct AppView: View{
         
        // RequestManager.getAllNotification(url : RequestManager.urlGetAllNotification!)
     @EnvironmentObject var settings: userSettings
+
     
     var body: some View {
         let drag = DragGesture()
@@ -26,6 +27,11 @@ struct AppView: View{
                     }
                 }
         }
+       /* self.settings.token = ""
+        self.settings.id = ""
+        self.settings.prenom = ""
+        self.settings.nom = ""*/
+        print("ONESTLA")
         
         if(settings.token == ""){
             return AnyView(NavigationView {
