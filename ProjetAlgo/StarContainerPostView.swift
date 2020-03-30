@@ -16,22 +16,22 @@ struct StarContainerPostView : View {
    var body: some View {
        HStack(alignment: .center) {
            HStack(alignment: .center) {
-            Text(post.likeTab.count.description)
-                   .padding(.top, 2)
+            Text(post.likeTab.count.description + " fois entendu")
+                   .padding(.top, 10)
 
-               Image(systemName: "star.fill")
+               /*Image(systemName: "star.fill")
                    .font(.subheadline)
-                   .foregroundColor(.green)
+                   .foregroundColor(.green)*/
            }
            .padding(.leading, 10)
         Spacer()
             HStack(alignment: .center) {
-             Text(post.dislikeTab.count.description)
-                    .padding(.top, 2)
+             Text(post.dislikeTab.count.description + " fois pas entendu")
+                    .padding(.top, 10)
 
-                Image(systemName: "star.fill")
+              /*  Image(systemName: "star.fill")
                     .font(.subheadline)
-                    .foregroundColor(.red)
+                    .foregroundColor(.red)*/
             }
             .padding(.leading, 10)
        }

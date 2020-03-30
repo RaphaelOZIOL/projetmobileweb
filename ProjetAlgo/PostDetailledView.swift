@@ -29,7 +29,7 @@ struct PostDetailledView: View {
     var body: some View {
         var notifId = ""
         //print(self.notifTab.notifTab[0].dateCreation)
-        if(self.notifTab.notifTab.count > 0){
+        if(self.notifTab.notifTab.count > 0 && self.notifTab.notifTab.count == self.postTab.postTab.count){
             notifId = self.notifTab.getIdNotifByPostId(postId: self.post.id)
         }
         if(notifId != "" && self.notifTab.estPasVuByPost(postId: self.post.id)){
@@ -76,7 +76,7 @@ struct PostDetailledView: View {
                                      .lineLimit(2)
                                      .layoutPriority(1000)
 
-                                 Text(post.dateCreation.description) // Date
+                                 Text(RequestManager.getStringDate(d:  post.dateCreation)) // Date
                                      .font(.caption)
                                      
                                      .lineLimit(nil)
@@ -115,9 +115,13 @@ struct PostDetailledView: View {
                              
                          }
                          
-                         StarContainerPostView(post : post)
+                         //StarContainerPostView(post : post)
                         if(self.settings.token != ""){
                             ButtonsPostView(post : post)
+                        }
+                        else{
+                            ButtonsPostNoConnectedView(post: post)
+                                .padding(.bottom,30)
                         }
                      }
                  

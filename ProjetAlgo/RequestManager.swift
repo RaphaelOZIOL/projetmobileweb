@@ -300,6 +300,15 @@ class RequestManager : Identifiable{
  
     }
     
+    static func getStringDate(d : Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        formatter.locale = Locale(identifier: "fr_FR") // Spanish from Spain
+        formatter.dateStyle = .long
+        return formatter.string(from: d) // returns "10 de diciembre, 2018"
+        
+    }
+    
     static func getRequest(url : URL?) -> [String: Any]{
         var reponse:[String: Any] = [:]
         var request = URLRequest(url: url!)

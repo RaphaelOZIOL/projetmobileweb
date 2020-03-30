@@ -32,7 +32,7 @@ struct ReponseRowView: View {
                                     .lineLimit(2)
                                     .layoutPriority(1000)*/
 
-                                Text(reponse.dateCreation.description) // Date
+                                Text(RequestManager.getStringDate(d:  reponse.dateCreation)) // Date
                                     .font(.caption)
                                     
                                     .lineLimit(nil)

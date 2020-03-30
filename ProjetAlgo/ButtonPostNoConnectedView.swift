@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ButtonsPostView: View {
+struct ButtonsPostNoConnectedView: View {
     @ObservedObject var post : Post
     @EnvironmentObject var settings: userSettings
     @State var tmpMenu : Bool = false
@@ -18,33 +18,7 @@ struct ButtonsPostView: View {
             return AnyView(HStack{
                     GeometryReader { geometry in
                         HStack(alignment: .center){
-                            Button(action : {
-                            
-                                if(!self.post.isLiked(user: self.settings.id) && !self.post.isDisliked(user: self.settings.id)){
-                                    let reponse = RequestManager.addLikePost(postId: self.post.id, token: self.settings.token)
-                                    print()
-                                    if((reponse["text"] as! String) != "Succès"){
-                                        
-                                        print("Pas connecté A")
-                                    }
-                                    else{
-                                        self.post.addLike(user : self.settings.id)
-                                    }
-                                }
-                                else{
-                                    let reponse = RequestManager.deleteLikePost(postId: self.post.id, token: self.settings.token)
-                                    print()
-                                    if((reponse["text"] as! String) != "Succès"){
-                                        
-                                        print("Pas connecté D")
-                                    }
-                                    else{
-                                        self.post.deleteLike(user : self.settings.id)
-                                    }
-                                    
-                                }
-                            }){
-                            
+                                                        
                                 HStack{
                                     Text(self.post.likeTab.count.description)
                                      .fontWeight(.semibold)
@@ -69,35 +43,10 @@ struct ButtonsPostView: View {
                                 .cornerRadius(40)
                                 //.frame(width: geometry.size.width / 2, height: 100)
                                 
-                            }
-                            .buttonStyle(PlainButtonStyle())
                             
-                            Button(action : {
-                                if(!self.post.isDisliked(user: self.settings.id) && !self.post.isLiked(user: self.settings.id)){
-                                    let reponse = RequestManager.addDislikePost(postId: self.post.id, token: self.settings.token)
-                                    print()
-                                    if((reponse["text"] as! String) != "Succès"){
-                                        
-                                        print("Pas connecté A")
-                                    }
-                                    else{
-                                        self.post.addDislike(user : self.settings.id)
-                                    }
-                                }
-                                else{
-                                    let reponse = RequestManager.deleteDislikePost(postId: self.post.id, token: self.settings.token)
-                                    print()
-                                    if((reponse["text"] as! String) != "Succès"){
-                                        
-                                        print("Pas connecté D")
-                                    }
-                                    else{
-                                        self.post.deleteDislike(user : self.settings.id)
-                                    }
-                                    
-                                }
-                                
-                            }){
+                        
+                            
+                           
                                 HStack{
                                     Text(self.post.dislikeTab.count.description)
                                      .fontWeight(.semibold)
@@ -121,8 +70,7 @@ struct ButtonsPostView: View {
                                 .background(Color.red)
                                 .cornerRadius(40)
                                 //.frame(width: geometry.size.width / 2, height: 100)
-                            }
-                            .buttonStyle(PlainButtonStyle())
+                            
                            /* Button(action : {
                                                     
                                 if(!self.post.isSignaled(user: self.settings.id)){
