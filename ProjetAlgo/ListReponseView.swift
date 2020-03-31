@@ -43,13 +43,7 @@ struct ListReponseView: View {
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(10.0)
 
-                    if showCancelButton  {
-                        Button("Cancel") {
-                                self.searchText = ""
-                                self.showCancelButton = false
-                        }
-                        .foregroundColor(Color(.systemBlue))
-                    }
+                    
                 }
                 .padding(.horizontal)
                 .navigationBarHidden(showCancelButton)

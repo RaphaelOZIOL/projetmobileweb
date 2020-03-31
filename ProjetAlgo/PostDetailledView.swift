@@ -16,6 +16,7 @@ struct PostDetailledView: View {
     @State var reponseText : String = ""
     @ObservedObject var notifTab : NotificationSet
     @ObservedObject var postTab : PostSet
+    @ObservedObject private var keyboard = KeyboardResponder()
     var cat = ["Personel","Livre","Film","Humour","Citation","Réseaux","Autre"]
         
     
@@ -153,7 +154,13 @@ struct PostDetailledView: View {
                  
                 if(self.settings.token != ""){
                     HStack(){
-                        TextField("Entrer votre réponse", text: self.$reponseText)
+                        HStack{
+                            TextField("Entrer votre réponse", text: self.$reponseText)
+                        }
+                        .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
+                        .foregroundColor(.secondary)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(10.0)
                         Button(action : {
                             let reponse = RequestManager.createReponse(libelleReponse: self.reponseText, token: self.settings.token, postId: self.post.id)
                             print(reponse)
@@ -191,6 +198,9 @@ struct PostDetailledView: View {
                 
                 ListReponseView(reponseList : reponseList)
              }
+             .padding(.bottom, keyboard.currentHeight)
+             .edgesIgnoringSafeArea(.bottom)
+             .animation(.easeOut(duration: 0.16))
             
             
             }

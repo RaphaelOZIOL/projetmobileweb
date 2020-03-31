@@ -18,7 +18,7 @@ struct ListPostView : View{
     @ObservedObject var notifList : NotificationSet
     @State private var searchText = ""
     @State private var showCancelButton: Bool = false
-    @State var filterCateg: Bool = false
+    //@State var filterCateg: Bool = false
     init(postList : PostSet, token : String){
         self.postList = postList
         
@@ -38,44 +38,63 @@ struct ListPostView : View{
 
         List {
             // Search view
-            HStack {
+            GeometryReader { geometry in
                 HStack {
-                    Image(systemName: "magnifyingglass")
+                    HStack {
+                        Image(systemName: "magnifyingglass")
 
-                    TextField("search", text: $searchText, onEditingChanged: { isEditing in
-                        self.showCancelButton = true
-                    }, onCommit: {
-                        print("onCommit")
-                    }).foregroundColor(.primary)
+                        TextField("search", text: self.$searchText, onEditingChanged: { isEditing in
+                            self.showCancelButton = true
+                        }, onCommit: {
+                            print("onCommit")
+                        }).foregroundColor(.primary)
 
-                    Button(action: {
-                        self.searchText = ""
-                    }) {
-                        Image(systemName: "xmark.circle.fill").opacity(searchText == "" ? 0 : 1)
-                    }
-                }
-                .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
-                .foregroundColor(.secondary)
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(10.0)
-
-                if showCancelButton  {
-                    Button("Cancel") {
+                        Button(action: {
                             self.searchText = ""
-                            self.showCancelButton = false
+                        }) {
+                            Image(systemName: "xmark.circle.fill").opacity(self.searchText == "" ? 0 : 1)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+
                     }
-                    .foregroundColor(Color(.systemBlue))
+                    .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
+                    .foregroundColor(.secondary)
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(10.0)
+                    .frame(width: geometry.size.width * 0.8, height: 100)
+
+                  /*  if self.showCancelButton  {
+                        Button("Cancel") {
+                                self.searchText = ""
+                                self.showCancelButton = false
+                        }
+                        .foregroundColor(Color(.systemBlue))
+                        .frame(width: geometry.size.width * 0.2, height: 100)
+                        .buttonStyle(PlainButtonStyle())
+                    }*/
+                    
+                    HStack(){
+                        NavigationLink(destination: FilterView(cat : RequestManager.getAllCategorie(url: RequestManager.urlGetAllCategorie!), postTab : self.postList/*, filterCateg: self.$filterCateg*/)){
+                            Text("Filtre")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            //.frame(width: geometry.size.width * 0.2, height: 100)
+                            .frame(width: 80, height: 40)
+                            .background(Color.blue)
+                            .cornerRadius(15.0)
+                            .shadow(radius: 10.0, x: 20, y: 10)
+                        }
+                    }
+                    .frame(width: geometry.size.width * 0.2, height: 100)
+                    
+                    
+                    
                 }
-                
-                NavigationLink(destination: FilterView(cat : RequestManager.getAllCategorie(url: RequestManager.urlGetAllCategorie!), postTab : self.postList, filterCateg: self.filterCateg)){
-                    Image(systemName: "square.and.pencil")
-                        .imageScale(.large)
-                }
-                
-                
+                .padding(.horizontal)
+                .navigationBarHidden(self.showCancelButton)
             }
-            .padding(.horizontal)
-            .navigationBarHidden(showCancelButton)
+            
             // Filtered list of names
             ForEach(postList.postTab.filter{($0.libelle.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased())) || searchText == ""}){post in
                

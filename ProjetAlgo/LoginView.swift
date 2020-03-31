@@ -113,7 +113,7 @@ struct LoginView: View {
                     LinearGradient(gradient: Gradient(colors: [.red, .yellow]), startPoint: .top, endPoint: .bottom)
                         .edgesIgnoringSafeArea(.all))
                 
-                .padding(.bottom, keyboard.currentHeight)
+                .padding(.bottom, keyboard.currentHeight * 1.35)
                 .edgesIgnoringSafeArea(.bottom)
                 .animation(.easeOut(duration: 0.16))
 

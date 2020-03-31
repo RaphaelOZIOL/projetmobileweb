@@ -16,8 +16,10 @@ struct FilterView: View {
     @State var categorie:Int = 0
     var cat : [String]
     @ObservedObject var postTab : PostSet
-    @State var filterCateg : Bool
-
+    @State var filterCateg : Bool = false
+    @State var filterPostEntendu : Bool = false
+    @State var filterPostPlusReponse : Bool = false
+    
     var body: some View {
         
         return(
@@ -43,17 +45,68 @@ struct FilterView: View {
                         }.padding()
                         .onTapGesture {
                             if (!self.filterCateg) {
-                              print("salut")
+                                print("salut")
+            
+                                self.postTab.filterByCateg(categ: self.cat[self.categorie])
                           }
                         }
                         
                         
                     }
                 }
+                
+                HStack(alignment: .center){
+                        
+                        Text("Les posts les plus entendus")
+                            
+                        
+                        HStack{
+                            Toggle(isOn: $filterPostEntendu) {
+                                Text("")
+                            }.padding()
+                            .onTapGesture {
+                                if (!self.filterPostEntendu) {
+                                    print("salut")
+                
+                                    self.postTab.filterByLike()
+                              }
+                            }
+                            
+                            
+                        }
+                    }
+                HStack(alignment: .center){
+                        
+                        Text("Les posts avec le plus de réponses")
+                            
+                        
+                        HStack{
+                            Toggle(isOn: $filterPostPlusReponse) {
+                                Text("")
+                            }.padding()
+                            .onTapGesture {
+                                if (!self.filterPostPlusReponse) {
+                                    print("salut")
+                
+                                    self.postTab.filterByNbReponse()
+                              }
+                            }
+                            
+                            
+                        }
+                    }
         
             }
         }
         )
+        .onAppear(perform: loadData)
+    }
+    
+    
+    func loadData(){
+        self.filterCateg = false
+        self.postTab.updateTab(postTab: RequestManager.getAllPost(url : RequestManager.urlGetAllPost!).postTab)
+        
     }
 }
 /*

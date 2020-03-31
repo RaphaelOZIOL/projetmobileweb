@@ -46,4 +46,23 @@ class PostSet : ObservableObject{
         }
         return postList
     }
+    
+    func filterByCateg(categ : String){
+         var postList = PostSet(postTab: [])
+         for j in 0..<self.postTab.count{
+            if(self.postTab[j].categ == categ){
+                 postList.add(post: self.postTab[j])
+                 
+             }
+         }
+        self.postTab = postList.postTab
+     }
+    
+    func filterByLike(){
+        self.postTab.sort {$0.likeTab.count >= $1.likeTab.count}
+    }
+    
+    func filterByNbReponse(){
+        self.postTab.sort {$0.reponses.count >= $1.reponses.count}
+    }
 }
