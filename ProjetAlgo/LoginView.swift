@@ -63,7 +63,9 @@ struct LoginView: View {
                         self.settings.prenom = reponse["prenom"] as! String
                         self.settings.id = reponse["_id"] as! String
                         self.settings.writeJson()
-                       /* self.notifList = RequestManager.getAllNotification(url : URL(string: RequestManager.urlGetAllNotification!.absoluteString + self.settings.token)!)*/
+                        /*print(self.settings.token + "7891")
+                        self.settings.loadJson(fileName: "UserSettings")
+                        print(self.settings.token + "2356")*/
                         self.showMenu = false
                         self.presentationMode.wrappedValue.dismiss()
                     }

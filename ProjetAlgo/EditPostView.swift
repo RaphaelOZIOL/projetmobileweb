@@ -14,10 +14,9 @@ struct EditPostView: View {
     @EnvironmentObject var settings: userSettings
     @ObservedObject var post:Post
     @State var categorie:Int
-    
-    var cat = ["Personnel","Livre","Film","Humour","Citation","Réseaux","Autre"]
-    
-    
+    var cat : [String]
+    @ObservedObject var postTab : PostSet
+
     var body: some View {
         
         return(
@@ -49,7 +48,7 @@ struct EditPostView: View {
             }
         }
         Button(action: {
-                
+            
             self.post.categ = self.cat[self.categorie]
             print(self.post)
             var r = RequestManager.updatePost(post: self.post, token : self.settings.token)
@@ -58,6 +57,7 @@ struct EditPostView: View {
                     print("La requete a echoué")
                 }
                 else{
+                    self.postTab.updatePost(post: self.post)
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }) {

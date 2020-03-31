@@ -27,11 +27,8 @@ struct AppView: View{
                     }
                 }
         }
-       /* self.settings.token = ""
-        self.settings.id = ""
-        self.settings.prenom = ""
-        self.settings.nom = ""*/
-        print("ONESTLA")
+       
+        print(settings.token + "12345")
         
         if(settings.token == ""){
             return AnyView(NavigationView {
@@ -89,7 +86,7 @@ struct AppView: View{
                     .navigationBarTitle("Fil d'actualité", displayMode: .inline)
                     .navigationBarItems(
                         leading: (
-                            NavigationLink(destination: CreatePostView(showMenu : self.$showMenu, postList : self.postList)){
+                            NavigationLink(destination: CreatePostView(showMenu : self.$showMenu, postList : self.postList, cat : RequestManager.getAllCategorie(url: RequestManager.urlGetAllCategorie!))){
                                 Image(systemName: "square.and.pencil")
                                     .imageScale(.large)
                             }

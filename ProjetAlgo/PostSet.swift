@@ -25,6 +25,15 @@ class PostSet : ObservableObject{
         self.postTab = postTab
     }
     
+    func updatePost(post : Post){
+        for j in 0..<self.postTab.count{
+            if(postTab[j].id == post.id){
+                postTab[j] = post
+                
+            }
+        }
+    }
+    
     func getAllPostNotified(notifTab : NotificationSet) -> PostSet{
         var postList = PostSet(postTab: [])
         for i in 0..<notifTab.notifTab.count{

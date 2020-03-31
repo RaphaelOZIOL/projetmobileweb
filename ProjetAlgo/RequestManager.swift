@@ -34,6 +34,7 @@ class RequestManager : Identifiable{
     static var urlDeleteDislikeReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/deleteDislike")//postId token
     static var urlAddSignalementReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/addSignalement")
     static var urlDeleteSignalementReponse = URL(string : "https://projetmobileweb.herokuapp.com/reponse/addSignalement")
+    static var urlGetAllCategorie = URL(string : "https://projetmobileweb.herokuapp.com/categorie/get/allCategorie") //token
     
     static func loginRequest(email: String, pwd : String) -> [String: Any]{
        return RequestManager.postRequest(url: urlLogin,postString: RequestManager.getPostStringLogin(email: email, password: pwd))
@@ -63,6 +64,19 @@ class RequestManager : Identifiable{
     static func updatePost(post: Post, token : String) -> [String: Any]{
        return RequestManager.patchRequest(url: urlUpdatePost, postString: RequestManager.getPostStringUpdatePost(post: post, token: token))
     }
+    
+    static func getAllCategorie(url : URL) -> [String]{
+           let reponse = RequestManager.getRequestTab(url: url)
+        var allCateg : [String] = []
+           
+           print(reponse)
+           for categ in reponse {
+               
+               allCateg.append(categ["nom"] as! String)
+    
+           }
+           return allCateg
+       }
     
     static func getAllPost(url : URL) -> PostSet{
         let reponse = RequestManager.getRequestTab(url: url)
@@ -136,45 +150,7 @@ class RequestManager : Identifiable{
            }
            return allNotif
        }
-   /* static func getAllNotificationPost(url : URL) -> PostSet{
-           let requete = RequestManager.getRequestTab(url: url)
-           var allNotifPost = PostSet(postTab: [])
-           print("NOTIFICATION     ")
-           print(requete)
-            print("FIIIIIIIIIIIIIIIIN")
-           for post in requete {
-
-                var id : NSString! = ""
-                var like : [NSString] = []
-                var dislike : [NSString] = []
-                var signalement : [NSString] = []
-                var reponse : [NSString] = []
-                var description : NSString! = ""
-                var libelle : NSString! = ""
-                var userId : NSString! = ""
-                var categorie : NSString! = ""
-                var date : NSDate! = NSDate()
-                if let dict = post["postId"] as? NSDictionary
-                {
-                    id = dict["_id"] as! NSString
-                    like = dict["like"] as! [NSString]
-                    dislike = dict["dislike"] as! [NSString]
-                    signalement = dict["signalement"] as! [NSString]
-                    reponse = dict["reponse"] as! [NSString]
-                    description = dict["description"] as! NSString
-                    libelle = dict["libelle"] as! NSString
-                    id = dict["_id"] as! NSString
-                    id = dict["_id"] as! NSString
-                }
-                
-                let post = Post(id : id.description)
-            
-                allNotifPost.add(post: post)
-    
-               
-           }
-           return allNotifPost
-       }*/
+   
     
     static func addLikePost(postId : String, token : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlAddLike, postString: RequestManager.getPostStringPostToken(postId: postId, token: token))
@@ -237,6 +213,7 @@ class RequestManager : Identifiable{
     static func setNotificationTrue(notificationId : String) -> [String:Any]{
         return RequestManager.patchRequest(url: urlSetNotificationTrue, postString: RequestManager.getPostStringNotif(notificationId: notificationId))
     }
+    
     
     static func getPostStringNotif(notificationId : String) -> String{
         let string1 = "notificationId=" + notificationId

@@ -60,70 +60,94 @@ struct PostDetailledView: View {
         return  HStack {
              
              VStack (alignment: .leading){
-                 
-                 
-                 
-                     VStack (alignment: .leading){
-                         HStack() {
-                             Image(systemName: "person.crop.circle")
-                                 .font(.subheadline)
-                                 .padding(.top, 5)
-                                 .foregroundColor(.secondary)
+                
+                VStack (alignment: .leading){
+                    
+                    
+                    HStack(spacing : 5) {
+                        Image(systemName: "person.crop.circle")
+                        .font(.subheadline)
+                            .padding([.top,.trailing], 15)
+                        .foregroundColor(.secondary)
+                       
+                        
+                        Text(post.user.pseudo)
+                        .font(.headline)
+                            .padding(.top, 15)
+                        //.lineLimit(nil)
+                      //  .layoutPriority(999)
+                    }
+                    
+                    HStack() {
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(post.description)
+                                .font(.headline)
+                                .lineLimit(2)
+                                .layoutPriority(1000)
 
-                             VStack(alignment: .leading, spacing: 5) {
-                                 Text(post.description)
-                                     .font(.headline)
-                                     .lineLimit(2)
-                                     .layoutPriority(1000)
-
-                                 Text(RequestManager.getStringDate(d:  post.dateCreation)) // Date
-                                     .font(.caption)
-                                     
-                                     .lineLimit(nil)
-                                     .layoutPriority(999)
-                                
-                                
-                            
-                            }
-                            VStack(alignment: .leading, spacing: 5) {
-                                if(self.settings.id == post.user.id.description){
-                                    NavigationLink(destination: EditPostView(post: self.post, categorie: categorie)){
-                                            Text("Modifier")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .frame(width: 100, height: 50)
-                                        .background(Color.green)
-                                        .cornerRadius(15.0)
-                                        .shadow(radius: 10.0, x: 20, y: 10)
-                                    }
+                            Text(RequestManager.getStringDate(d:  post.dateCreation)) // Date
+                                .font(.caption)
+                                .padding(.trailing, 15)
+                                .lineLimit(nil)
+                                .layoutPriority(999)
+                        }
+                        VStack(alignment: .leading, spacing: 5) {
+                            if(self.settings.id == post.user.id.description){
+                                NavigationLink(destination: EditPostView(post: self.post, categorie: categorie, cat : RequestManager.getAllCategorie(url: RequestManager.urlGetAllCategorie!), postTab : self.postTab)){
+                                        Text("Modifier")
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .frame(width: 90, height: 40)
+                                    .background(Color.green)
+                                    .cornerRadius(15.0)
+                                    .shadow(radius: 10.0, x: 20, y: 10)
                                 }
                             }
+                        }
+                        
+                        //ici
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 5) {
+                                                           
+                            Text(post.categ) // Date
+                            .font(.caption)
                             
-                             
-                             
-                         }
-                         .padding(.leading, 5)
-                         //.padding([.top, .bottom], 10)
-                         
-                         VStack(){
-                             Text(post.libelle) // Date
-                             .font(.caption)
-                                 
-                             .lineLimit(nil)
-                             .layoutPriority(999)
-                             
-                         }
+                            .lineLimit(nil)
+                            .layoutPriority(999)
+                            
+                        }.padding([.trailing, .leading], 15)
+                        
+                    }
+                    .padding(.leading, 5)
+                    .padding(.bottom, 10)
+                    
+                    VStack(){
+                        Text(post.libelle) // Date
+                        .font(.caption)
+                            
+                        .lineLimit(nil)
+                        .layoutPriority(999)
+                        
+                    }
+                    
+                   // StarContainerPostView(post : post)
+                }.padding(.bottom,30)
+                 
+                 
+                 
+                    
                          
                          //StarContainerPostView(post : post)
-                        if(self.settings.token != ""){
-                            ButtonsPostView(post : post)
-                        }
-                        else{
-                            ButtonsPostNoConnectedView(post: post)
-                                .padding(.bottom,30)
-                        }
-                     }
+                if(self.settings.token != ""){
+                    ButtonsPostView(post : post)
+                }
+                else{
+                    ButtonsPostNoConnectedView(post: post)
+                    .padding(.bottom,30)
+                }
+            
                  
                      
                  
@@ -138,7 +162,7 @@ struct PostDetailledView: View {
                                 print("Pas connecté A")
                             }
                             else{
-                                self.reponseList.add(reponse: Reponse(libelle : self.reponseText))
+                                self.reponseList.add(reponse: Reponse(id : reponse["id"] as! String, libelle : self.reponseText))
                                 self.reponseText = ""
                               //  self.$reponseText.animation()
                             }
@@ -150,9 +174,13 @@ struct PostDetailledView: View {
                                     .foregroundColor(.secondary)*/
                                     
                                 Text("Envoyer")
-                                    .font(.subheadline)
-                                    .lineLimit(2)
-                                    .foregroundColor(.secondary)
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .frame(width: 100, height: 50)
+                                    .background(Color.blue)
+                                    .cornerRadius(15.0)
+                                    .shadow(radius: 10.0, x: 20, y: 10)
                             }
                         }
                             

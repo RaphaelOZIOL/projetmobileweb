@@ -10,13 +10,15 @@
 import SwiftUI
 
 
-struct ListPostView : View {
+struct ListPostView : View{
+
+    
 
     @ObservedObject var postList : PostSet
     @ObservedObject var notifList : NotificationSet
     @State private var searchText = ""
     @State private var showCancelButton: Bool = false
-    
+    @State var filterCateg: Bool = false
     init(postList : PostSet, token : String){
         self.postList = postList
         
@@ -64,6 +66,13 @@ struct ListPostView : View {
                     }
                     .foregroundColor(Color(.systemBlue))
                 }
+                
+                NavigationLink(destination: FilterView(cat : RequestManager.getAllCategorie(url: RequestManager.urlGetAllCategorie!), postTab : self.postList, filterCateg: self.filterCateg)){
+                    Image(systemName: "square.and.pencil")
+                        .imageScale(.large)
+                }
+                
+                
             }
             .padding(.horizontal)
             .navigationBarHidden(showCancelButton)

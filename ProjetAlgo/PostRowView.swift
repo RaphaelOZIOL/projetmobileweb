@@ -31,12 +31,24 @@ struct PostRowView: View {
                     NavigationLink(destination: PostDetailledView(post : post, notifTab : self.notifTab, postTab: self.postList)) {
                         
                         VStack (alignment: .leading){
-                            HStack() {
+                            
+                            
+                            HStack(spacing : 5) {
                                 Image(systemName: "person.crop.circle")
-                                    .font(.subheadline)
-                                    .padding(.top, 5)
-                                    .foregroundColor(.secondary)
-
+                                .font(.subheadline)
+                                    .padding([.top,.trailing], 15)
+                                .foregroundColor(.secondary)
+                               
+                                
+                                Text(post.user.pseudo)
+                                .font(.headline)
+                                    .padding(.top, 15)
+                                //.lineLimit(nil)
+                              //  .layoutPriority(999)
+                            }
+                            
+                            HStack() {
+                                
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(post.description)
                                         .font(.headline)
@@ -49,6 +61,7 @@ struct PostRowView: View {
                                         .lineLimit(nil)
                                         .layoutPriority(999)
                                 }
+                                Spacer()
                                 VStack(alignment: .trailing, spacing: 5) {
                                                                    
                                     Text(post.categ) // Date
@@ -61,7 +74,7 @@ struct PostRowView: View {
                                 
                             }
                             .padding(.leading, 5)
-                            .padding([.top, .bottom], 10)
+                            .padding(.bottom, 10)
                             
                             VStack(){
                                 Text(post.libelle) // Date

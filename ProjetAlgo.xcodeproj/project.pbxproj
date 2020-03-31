@@ -25,6 +25,7 @@
 		8688E814242655F100F0B03F /* StarContainerReponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8688E813242655F100F0B03F /* StarContainerReponseView.swift */; };
 		8688E816242657D200F0B03F /* ReponseSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8688E815242657D200F0B03F /* ReponseSet.swift */; };
 		8688E8182426606300F0B03F /* AbstractPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8688E8172426606300F0B03F /* AbstractPost.swift */; };
+		868E6E072433C18800063DFE /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868E6E062433C18800063DFE /* FilterView.swift */; };
 		8698575B241193B70014594A /* ProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8698575A241193B70014594A /* ProfilView.swift */; };
 		869DD146240CF49F004E6FD8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861CF8202405605100BC41C4 /* Post.swift */; };
 		869DD149240D01A4004E6FD8 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865D857424095DC0008DBEE7 /* SignUpView.swift */; };
@@ -86,6 +87,7 @@
 		8688E813242655F100F0B03F /* StarContainerReponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StarContainerReponseView.swift; path = ../StarContainerReponseView.swift; sourceTree = "<group>"; };
 		8688E815242657D200F0B03F /* ReponseSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReponseSet.swift; sourceTree = "<group>"; };
 		8688E8172426606300F0B03F /* AbstractPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractPost.swift; sourceTree = "<group>"; };
+		868E6E062433C18800063DFE /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		8698575A241193B70014594A /* ProfilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilView.swift; sourceTree = "<group>"; };
 		869DD14A240D11BD004E6FD8 /* poucehaut */ = {isa = PBXFileReference; explicitFileType = image.jpeg; name = poucehaut; path = ../../Downloads/poucehaut; sourceTree = SOURCE_ROOT; };
 		86B1A7CC24055605001670F7 /* ProjetAlgo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjetAlgo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +201,7 @@
 				8688E813242655F100F0B03F /* StarContainerReponseView.swift */,
 				8688E815242657D200F0B03F /* ReponseSet.swift */,
 				86254129241D4839001CFDCA /* PostSet.swift */,
+				868E6E062433C18800063DFE /* FilterView.swift */,
 				866EE7AE2421217B00CF6F9B /* EditPostView.swift */,
 				8688E8172426606300F0B03F /* AbstractPost.swift */,
 				86FDF2182428EC5200C92EF9 /* UserSettings.json */,
@@ -373,6 +376,7 @@
 				868601E024100FE400044321 /* KeyboardResponder.swift in Sources */,
 				86B1A7D024055605001670F7 /* AppDelegate.swift in Sources */,
 				865A45F524102AFC004E62C6 /* CreatePostView.swift in Sources */,
+				868E6E072433C18800063DFE /* FilterView.swift in Sources */,
 				86335E8324171FD60036DC02 /* StarContainerPostView.swift in Sources */,
 				86420550240E5D8500321A22 /* MenuView.swift in Sources */,
 				869DD146240CF49F004E6FD8 /* Post.swift in Sources */,
