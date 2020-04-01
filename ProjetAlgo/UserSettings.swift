@@ -18,7 +18,7 @@ class userSettings: ObservableObject {
     func loadJson(fileName: String) {
             do {
                 if let url:URL = try FileManager.default
-                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                 .appendingPathComponent(fileName+".json")/*= Bundle.main.url(forResource: fileName, withExtension: "json") */{
                 
                 let data = try Data(contentsOf: url)
